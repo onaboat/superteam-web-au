@@ -6,6 +6,7 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-hero: var(--hero);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
@@ -49,8 +50,11 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: #0a0a0a;
+  --hero: #ff6d2d;
+  --ticker-angle: -2deg;
+  --ticker-duration: 22s;
+  --foreground: oklch(0.985 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -84,7 +88,10 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: #0a0a0a;
+  --hero: #ff6d2d;
+  --ticker-angle: -2deg;
+  --ticker-duration: 22s;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -123,8 +130,51 @@
   }
   body {
     @apply bg-background text-foreground;
+    min-height: 100dvh;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    border: 10px solid var(--chart-1);
+    pointer-events: none;
+    z-index: 9999;
   }
   html {
-    @apply font-sans;
+    @apply bg-background font-sans;
+  }
+}
+
+@layer utilities {
+  .bg-hero {
+    background-color: var(--hero);
+  }
+
+  .ticker-tilt {
+    transform: rotate(var(--ticker-angle));
+    transform-origin: center;
+  }
+
+  .ticker-scroll {
+    animation: ticker-scroll var(--ticker-duration) linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-scroll {
+      animation: none;
+    }
+  }
+
+  @keyframes ticker-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-33.333333%, 0, 0);
+    }
   }
 }

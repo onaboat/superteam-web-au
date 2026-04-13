@@ -43,15 +43,15 @@ export const getInvolvedSchema = z.object({
   experience_level: z.enum(expValues),
   twitter_url: z
     .string()
-    .optional()
+    .nullish()
     .transform((v) => optionalUrl(v)),
   github_url: z
     .string()
-    .optional()
+    .nullish()
     .transform((v) => optionalUrl(v)),
   portfolio_url: z
     .string()
-    .optional()
+    .nullish()
     .transform((v) => optionalUrl(v)),
   looking_for: z.string().trim().min(10, "Add a bit more detail (10+ characters)"),
 });

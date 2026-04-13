@@ -1,0 +1,540 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "Superteam Australia home" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img "Superteam Australia" [ref=e6]
+        - generic [ref=e7]:
+          - navigation "Primary" [ref=e8]:
+            - link "About" [ref=e9] [cursor=pointer]:
+              - /url: /#about
+              - text: About
+            - link "Events" [ref=e10] [cursor=pointer]:
+              - /url: https://luma.com/SuperteamAU
+              - text: Events
+            - link "Members" [ref=e11] [cursor=pointer]:
+              - /url: /members
+              - text: Members
+            - link "FAQ" [ref=e12] [cursor=pointer]:
+              - /url: /#faq
+          - link "Get Involved" [ref=e13] [cursor=pointer]:
+            - /url: /get-involved
+    - main [ref=e14]:
+      - generic [ref=e17]:
+        - heading "Australia's Home for Solana Builderss" [level=1] [ref=e18]:
+          - generic [ref=e19]: Australia's Home
+          - generic [ref=e20]:
+            - text: for
+            - img "Solana" [ref=e21]
+          - generic [ref=e22]: Builderss
+        - paragraph [ref=e23]: Accelerating founders, creatives & institutions while driving internet capital markets on solana
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - img [ref=e29]
+            - paragraph [ref=e30]: 30 MEMBERS
+          - generic [ref=e31]:
+            - img [ref=e32]
+            - paragraph [ref=e33]: 150+ EVENTS
+          - generic [ref=e34]:
+            - img [ref=e35]
+            - paragraph [ref=e36]: 45+ PROJECTS BUILT
+        - generic [ref=e37]:
+          - generic [ref=e38]:
+            - img [ref=e39]
+            - paragraph [ref=e40]: 30 MEMBERS
+          - generic [ref=e41]:
+            - img [ref=e42]
+            - paragraph [ref=e43]: 150+ EVENTS
+          - generic [ref=e44]:
+            - img [ref=e45]
+            - paragraph [ref=e46]: 45+ PROJECTS BUILT
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - img [ref=e49]
+            - paragraph [ref=e50]: 30 MEMBERS
+          - generic [ref=e51]:
+            - img [ref=e52]
+            - paragraph [ref=e53]: 150+ EVENTS
+          - generic [ref=e54]:
+            - img [ref=e55]
+            - paragraph [ref=e56]: 45+ PROJECTS BUILT
+      - generic [ref=e59]:
+        - heading "What We Do" [level=2] [ref=e60]
+        - paragraph [ref=e61]: We exist to accelerate builders, founders, creatives and institutions working towards internet capital markets on Solana.
+        - generic [ref=e62]:
+          - paragraph [ref=e63]: Builder & Founder Support•Product and technical guidance to help teams ship. Support across hackathons, bounties and ecosystem program
+          - paragraph [ref=e64]: Capital & Fundraising•Connecting capital with investable, scalable projects. Supporting founders with positioning and investor
+          - paragraph [ref=e65]: Growth & Distribution•Go-to-market and growth support. Access to ecosystem distribution and community
+          - paragraph [ref=e66]: Talent & Hiring•Connecting teams with developers, designers and operators. Supporting team formation and scaling.
+          - paragraph [ref=e67]: Institutional Engagement•Bridging builders with institutions. Engaging policymakers and supporting real-world deployments.
+      - generic [ref=e69]:
+        - generic [ref=e70]:
+          - heading "Join us at upcoming events." [level=2] [ref=e71]
+          - generic [ref=e72]:
+            - generic [ref=e73]:
+              - img [ref=e74]
+              - paragraph [ref=e77]: 25+
+              - paragraph [ref=e78]: Events hosted
+            - generic [ref=e79]:
+              - img [ref=e80]
+              - paragraph [ref=e83]: "4"
+              - paragraph [ref=e84]: Cities across Australia
+        - list [ref=e86]:
+          - listitem [ref=e87]:
+            - generic [ref=e91]:
+              - paragraph [ref=e92]: 11 Apr Saturday
+              - article [ref=e93]:
+                - generic [ref=e94]:
+                  - generic [ref=e95]:
+                    - paragraph [ref=e96]: 10:00
+                    - 'heading "Saturday Build Sessions - National (Colosseum Frontier Hackathon) | Superteam Australia: The Outback Frontier" [level=3] [ref=e97]'
+                    - paragraph [ref=e98]:
+                      - img [ref=e99]
+                      - generic [ref=e101]: By Superteam Australia
+                    - paragraph [ref=e102]:
+                      - img [ref=e103]
+                      - generic [ref=e105]: Google Meet
+                    - generic [ref=e106]:
+                      - generic [ref=e107]: Australia Wide
+                      - generic [ref=e108]: Colosseum Hackathon
+                      - generic [ref=e109]: Outback Frontier
+                  - 'img "Saturday Build Sessions - National (Colosseum Frontier Hackathon) | Superteam Australia: The Outback Frontier" [ref=e111]'
+          - listitem [ref=e112]:
+            - generic [ref=e116]:
+              - paragraph [ref=e117]: 14 Apr Tuesday
+              - article [ref=e118]:
+                - generic [ref=e119]:
+                  - generic [ref=e120]:
+                    - paragraph [ref=e121]: 18:00
+                    - 'heading "Developer Office Hours (Colosseum Frontier Hackathon) | Superteam Australia: The Outback Frontier" [level=3] [ref=e122]'
+                    - paragraph [ref=e123]:
+                      - img [ref=e124]
+                      - generic [ref=e126]: By Superteam Australia
+                    - paragraph [ref=e127]:
+                      - img [ref=e128]
+                      - generic [ref=e130]: TBA
+                    - generic [ref=e131]:
+                      - generic [ref=e132]: Australia Wide
+                      - generic [ref=e133]: Colosseum Hackathon
+                      - generic [ref=e134]: Outback Frontier
+                  - 'img "Developer Office Hours (Colosseum Frontier Hackathon) | Superteam Australia: The Outback Frontier" [ref=e136]'
+          - listitem [ref=e137]:
+            - generic [ref=e141]:
+              - paragraph [ref=e142]: 15 Apr Wednesday
+              - article [ref=e143]:
+                - generic [ref=e144]:
+                  - generic [ref=e145]:
+                    - paragraph [ref=e146]: 18:30
+                    - heading "Sydney Launch | Superteam Australia" [level=3] [ref=e147]
+                    - paragraph [ref=e148]:
+                      - img [ref=e149]
+                      - generic [ref=e151]: By Superteam Australia
+                    - paragraph [ref=e152]:
+                      - img [ref=e153]
+                      - generic [ref=e155]: Circular Quay, Sydney
+                    - generic [ref=e156]:
+                      - generic [ref=e157]: Sydney
+                      - generic [ref=e158]: Launch Event
+                  - img "Sydney Launch | Superteam Australia" [ref=e160]
+          - listitem [ref=e161]:
+            - generic [ref=e164]:
+              - paragraph [ref=e165]: 16 Apr Thursday
+              - article [ref=e166]:
+                - generic [ref=e167]:
+                  - generic [ref=e168]:
+                    - paragraph [ref=e169]: 17:30
+                    - heading "Sydney Developer Meetup (Colosseum Frontier Hackathon) | Superteam Australia" [level=3] [ref=e170]
+                    - paragraph [ref=e171]:
+                      - img [ref=e172]
+                      - generic [ref=e174]: By Superteam Australia
+                    - paragraph [ref=e175]:
+                      - img [ref=e176]
+                      - generic [ref=e178]: Sydney, NSW
+                    - generic [ref=e179]:
+                      - generic [ref=e180]: Sydney
+                      - generic [ref=e181]: Colosseum Hackathon
+                  - img "Sydney Developer Meetup (Colosseum Frontier Hackathon) | Superteam Australia" [ref=e183]
+        - link "View all events on Luma" [ref=e185] [cursor=pointer]:
+          - /url: https://luma.com/SuperteamAU
+          - text: View all events on Luma
+          - img
+      - generic [ref=e187]:
+        - heading "Australian Solana Builders" [level=2] [ref=e188]:
+          - generic [ref=e189]: Australian
+          - img "Solana" [ref=e190]
+          - generic [ref=e191]: Builders
+        - generic [ref=e192]:
+          - generic [ref=e194]:
+            - generic [ref=e196]: A
+            - heading "Ava Chen" [level=3] [ref=e197]
+            - paragraph [ref=e198]: Solana Frontend Engineer
+            - paragraph [ref=e199]: Coastline Labs
+            - generic [ref=e200]:
+              - generic [ref=e201]: Frontend
+              - generic [ref=e202]: Rust
+              - generic [ref=e203]: Product
+            - paragraph [ref=e204]:
+              - link "@avachen_dev" [ref=e205] [cursor=pointer]:
+                - /url: https://x.com/avachen_dev
+          - generic [ref=e207]:
+            - generic [ref=e209]: "N"
+            - heading "Noah Singh" [level=3] [ref=e210]
+            - paragraph [ref=e211]: Founder
+            - paragraph [ref=e212]: Harbor Protocol
+            - generic [ref=e213]:
+              - generic [ref=e214]: Founder
+              - generic [ref=e215]: Growth
+              - generic [ref=e216]: Community
+            - paragraph [ref=e217]:
+              - link "@noahbuilds" [ref=e218] [cursor=pointer]:
+                - /url: https://x.com/noahbuilds
+          - generic [ref=e220]:
+            - generic [ref=e222]: M
+            - heading "Mia Thompson" [level=3] [ref=e223]
+            - paragraph [ref=e224]: Product Designer
+            - paragraph [ref=e225]: Studio Sol
+            - generic [ref=e226]:
+              - generic [ref=e227]: Design
+              - generic [ref=e228]: Frontend
+              - generic [ref=e229]: Content
+            - paragraph [ref=e230]:
+              - link "@miathompson_ui" [ref=e231] [cursor=pointer]:
+                - /url: https://x.com/miathompson_ui
+          - generic [ref=e233]:
+            - generic [ref=e235]: L
+            - heading "Liam Patel" [level=3] [ref=e236]
+            - paragraph [ref=e237]: Rust Smart Contract Engineer
+            - paragraph [ref=e238]: Nullpoint
+            - generic [ref=e239]:
+              - generic [ref=e240]: Rust
+              - generic [ref=e241]: Core Team
+            - paragraph [ref=e242]: —
+          - generic [ref=e244]:
+            - generic [ref=e246]: S
+            - heading "Sophie Nguyen" [level=3] [ref=e247]
+            - paragraph [ref=e248]: Community Lead
+            - paragraph [ref=e249]: South Node
+            - generic [ref=e250]:
+              - generic [ref=e251]: Community
+              - generic [ref=e252]: Content
+              - generic [ref=e253]: Growth
+            - paragraph [ref=e254]:
+              - link "@sophienguyen_au" [ref=e255] [cursor=pointer]:
+                - /url: https://x.com/sophienguyen_au
+          - generic [ref=e257]:
+            - generic [ref=e259]: E
+            - heading "Ethan Brooks" [level=3] [ref=e260]
+            - paragraph [ref=e261]: DevRel Engineer
+            - paragraph [ref=e262]: Open Ledger AU
+            - generic [ref=e263]:
+              - generic [ref=e264]: Core Team
+              - generic [ref=e265]: Content
+              - generic [ref=e266]: Product
+            - paragraph [ref=e267]:
+              - link "@ethanbrooksdev" [ref=e268] [cursor=pointer]:
+                - /url: https://x.com/ethanbrooksdev
+          - generic [ref=e270]:
+            - generic [ref=e272]: G
+            - heading "Grace Wilson" [level=3] [ref=e273]
+            - paragraph [ref=e274]: Product Manager
+            - paragraph [ref=e275]: Pacific Chain
+            - generic [ref=e276]:
+              - generic [ref=e277]: Product
+              - generic [ref=e278]: Growth
+              - generic [ref=e279]: Founder
+            - paragraph [ref=e280]: —
+        - link "Join now" [ref=e282] [cursor=pointer]:
+          - /url: /get-involved
+      - generic [ref=e284]:
+        - heading "Community" [level=2] [ref=e285]
+        - generic [ref=e286]:
+          - generic [ref=e287]:
+            - generic [ref=e288]:
+              - img [ref=e290]
+              - generic [ref=e294]:
+                - generic [ref=e295]:
+                  - generic [ref=e296]: Superteam Australia
+                  - img "Verified" [ref=e297]
+                - paragraph [ref=e299]: "@SuperteamAU"
+                - button "Follow" [ref=e300]
+            - generic [ref=e301]:
+              - generic [ref=e302]: Build weekend is on — bring your idea to the @colosseumhackathon track. We'll be pairing teams with mentors all Saturday.
+              - generic [ref=e303]:
+                - paragraph [ref=e304]: Colosseum @colosseum
+                - paragraph [ref=e305]: Introducing Colosseum Copilot — your build partner for the frontier hackathon.
+              - generic [ref=e306]:
+                - time [ref=e307]: 10:44 AM · Apr 4, 2026
+                - img [ref=e308]
+              - generic [ref=e310]:
+                - generic [ref=e311]:
+                  - img [ref=e312]
+                  - text: "48"
+                - generic [ref=e314]:
+                  - img [ref=e315]
+                  - text: "4"
+                - button "Copy link" [ref=e317]:
+                  - img [ref=e318]
+                  - text: Copy link
+            - button "Read 4 replies" [ref=e321]
+          - generic [ref=e322]:
+            - generic [ref=e323]:
+              - img [ref=e325]
+              - generic [ref=e329]:
+                - generic [ref=e330]:
+                  - generic [ref=e331]: Colosseum
+                  - img "Verified" [ref=e332]
+                - paragraph [ref=e334]: "@colosseum"
+                - button "Follow" [ref=e335]
+            - generic [ref=e336]:
+              - generic [ref=e337]:
+                - text: Meet @Colosseum Copilot — know the landscape before you build.
+                - link "colosseum.org" [ref=e338] [cursor=pointer]:
+                  - /url: https://colosseum.org
+              - img "Product preview" [ref=e340]
+              - generic [ref=e341]:
+                - time [ref=e342]: 9:12 AM · Apr 3, 2026
+                - img [ref=e343]
+              - generic [ref=e345]:
+                - generic [ref=e346]:
+                  - img [ref=e347]
+                  - text: "112"
+                - generic [ref=e349]:
+                  - img [ref=e350]
+                  - text: "9"
+                - button "Copy link" [ref=e352]:
+                  - img [ref=e353]
+                  - text: Copy link
+            - button "Read more on X" [ref=e356]
+          - generic [ref=e357]:
+            - generic [ref=e358]:
+              - img [ref=e360]
+              - generic [ref=e364]:
+                - generic [ref=e365]:
+                  - generic [ref=e366]: Superteam Australia
+                  - img "Verified" [ref=e367]
+                - paragraph [ref=e369]: "@SuperteamAU"
+                - button "Follow" [ref=e370]
+            - generic [ref=e371]:
+              - generic [ref=e372]:
+                - text: Saturday Build Sessions are live — grab a seat on
+                - link "luma.com" [ref=e373] [cursor=pointer]:
+                  - /url: https://luma.com
+                - text: (Australia-wide slots).
+              - generic [ref=e374]:
+                - time [ref=e375]: 4:01 PM · Apr 2, 2026
+                - img [ref=e376]
+              - generic [ref=e378]:
+                - generic [ref=e379]:
+                  - img [ref=e380]
+                  - text: "23"
+                - generic [ref=e382]:
+                  - img [ref=e383]
+                  - text: "1"
+                - button "Copy link" [ref=e385]:
+                  - img [ref=e386]
+                  - text: Copy link
+            - button "Read 1 reply" [ref=e389]
+          - generic [ref=e390]:
+            - generic [ref=e391]:
+              - img [ref=e393]
+              - generic [ref=e397]:
+                - generic [ref=e398]:
+                  - generic [ref=e399]: Superteam Australia
+                  - img "Verified" [ref=e400]
+                - paragraph [ref=e402]: "@SuperteamAU"
+                - button "Follow" [ref=e403]
+            - generic [ref=e404]:
+              - generic [ref=e405]: Australia, it's time to earn. New listings are up for the Website Design & Build Challenge — tap in.
+              - img "Challenge listings preview" [ref=e407]
+              - generic [ref=e408]:
+                - time [ref=e409]: 11:20 AM · Apr 1, 2026
+                - img [ref=e410]
+              - generic [ref=e412]:
+                - generic [ref=e413]:
+                  - img [ref=e414]
+                  - text: "67"
+                - generic [ref=e416]:
+                  - img [ref=e417]
+                  - text: "6"
+                - button "Copy link" [ref=e419]:
+                  - img [ref=e420]
+                  - text: Copy link
+            - button "Read more on X" [ref=e423]
+          - generic [ref=e424]:
+            - generic [ref=e425]:
+              - img [ref=e427]
+              - generic [ref=e431]:
+                - generic [ref=e432]:
+                  - generic [ref=e433]: Superteam Australia
+                  - img "Verified" [ref=e434]
+                - paragraph [ref=e436]: "@SuperteamAU"
+                - button "Follow" [ref=e437]
+            - generic [ref=e438]:
+              - generic [ref=e439]: Major cities — Sydney · Melbourne · Brisbane · Perth. Rooftop launches & builder nights through April. DM to host a satellite meetup.
+              - generic [ref=e440]:
+                - time [ref=e441]: 8:05 PM · Mar 30, 2026
+                - img [ref=e442]
+              - generic [ref=e444]:
+                - generic [ref=e445]:
+                  - img [ref=e446]
+                  - text: "91"
+                - generic [ref=e448]:
+                  - img [ref=e449]
+                  - text: "15"
+                - button "Copy link" [ref=e451]:
+                  - img [ref=e452]
+                  - text: Copy link
+            - button "Read more on X" [ref=e455]
+          - generic [ref=e456]:
+            - generic [ref=e457]:
+              - img [ref=e459]
+              - generic [ref=e463]:
+                - generic [ref=e464]:
+                  - generic [ref=e465]: Superteam Australia
+                  - img "Verified" [ref=e466]
+                - paragraph [ref=e468]: "@SuperteamAU"
+                - button "Follow" [ref=e469]
+            - generic [ref=e470]:
+              - generic [ref=e471]: We keep saying "hackathon" for @colosseum — here's why that framing matters for founders vs. weekend sprints.
+              - generic [ref=e472]:
+                - paragraph [ref=e473]: K | Superteam @k_superteam
+                - paragraph [ref=e474]: It’s a startup competition with a shipping deadline, not a novelty sprint.
+              - generic [ref=e475]:
+                - time [ref=e476]: 2:33 PM · Mar 29, 2026
+                - img [ref=e477]
+              - generic [ref=e479]:
+                - generic [ref=e480]:
+                  - img [ref=e481]
+                  - text: "54"
+                - generic [ref=e483]:
+                  - img [ref=e484]
+                  - text: "7"
+                - button "Copy link" [ref=e486]:
+                  - img [ref=e487]
+                  - text: Copy link
+            - button "Read more on X" [ref=e490]
+          - generic [ref=e491]:
+            - generic [ref=e492]:
+              - img [ref=e494]
+              - generic [ref=e498]:
+                - generic [ref=e500]: K | Superteam
+                - paragraph [ref=e501]: "@k_superteam"
+                - button "Follow" [ref=e502]
+            - generic [ref=e503]:
+              - generic [ref=e504]: Colosseum is closer to a startup competition than a classic hackathon — teams are building toward launch, not a slide deck.
+              - generic [ref=e505]:
+                - paragraph [ref=e506]: ben @benbottle
+                - paragraph [ref=e507]: Judging rewards traction and clarity over vibes.
+              - generic [ref=e508]:
+                - time [ref=e509]: 6:50 AM · Mar 28, 2026
+                - img [ref=e510]
+              - generic [ref=e512]:
+                - generic [ref=e513]:
+                  - img [ref=e514]
+                  - text: "201"
+                - generic [ref=e516]:
+                  - img [ref=e517]
+                  - text: "22"
+                - button "Copy link" [ref=e519]:
+                  - img [ref=e520]
+                  - text: Copy link
+            - button "Read more on X" [ref=e523]
+          - generic [ref=e524]:
+            - generic [ref=e525]:
+              - img [ref=e527]
+              - generic [ref=e531]:
+                - generic [ref=e532]:
+                  - generic [ref=e533]: Superteam Australia
+                  - img "Verified" [ref=e534]
+                - paragraph [ref=e536]: "@SuperteamAU"
+                - button "Follow" [ref=e537]
+            - generic [ref=e538]:
+              - generic [ref=e539]:
+                - text: Australia just set the direction for digital assets — policy and implementation moving in lockstep. Analysis on
+                - link "coindesk.com" [ref=e540] [cursor=pointer]:
+                  - /url: https://coindesk.com
+                - text: .
+              - generic [ref=e541]:
+                - time [ref=e542]: 7:18 AM · Mar 27, 2026
+                - img [ref=e543]
+              - generic [ref=e545]:
+                - generic [ref=e546]:
+                  - img [ref=e547]
+                  - text: "134"
+                - generic [ref=e549]:
+                  - img [ref=e550]
+                  - text: "18"
+                - button "Copy link" [ref=e552]:
+                  - img [ref=e553]
+                  - text: Copy link
+            - button "Read more on X" [ref=e556]
+      - generic [ref=e558]:
+        - heading "Frequently Asked Questions" [level=2] [ref=e559]
+        - paragraph [ref=e560]: Everything you need to know about Superteam Australia.
+        - generic [ref=e561]:
+          - heading "What is Superteam Australia" [level=3] [ref=e563]:
+            - button "What is Superteam Australia" [ref=e564]:
+              - generic [ref=e565]: What is Superteam Australia
+              - img
+          - heading "How can i get involved" [level=3] [ref=e567]:
+            - button "How can i get involved" [ref=e568]:
+              - generic [ref=e569]: How can i get involved
+              - img
+          - heading "What opportunities are avaliable ?" [level=3] [ref=e571]:
+            - button "What opportunities are avaliable ?" [ref=e572]:
+              - generic [ref=e573]: What opportunities are avaliable ?
+              - img
+          - heading "How can institutions engage with Superteam Australia ?" [level=3] [ref=e575]:
+            - button "How can institutions engage with Superteam Australia ?" [ref=e576]:
+              - generic [ref=e577]: How can institutions engage with Superteam Australia ?
+              - img
+    - contentinfo [ref=e578]:
+      - generic [ref=e579]:
+        - generic [ref=e580]:
+          - img "Superteam Australia" [ref=e582]
+          - generic [ref=e583]:
+            - generic [ref=e584]:
+              - heading "Navigate" [level=3] [ref=e585]
+              - list [ref=e586]:
+                - listitem [ref=e587]:
+                  - link "About" [ref=e588] [cursor=pointer]:
+                    - /url: /#about
+                - listitem [ref=e589]:
+                  - link "Members" [ref=e590] [cursor=pointer]:
+                    - /url: /members
+                - listitem [ref=e591]:
+                  - link "Frequently asked questions" [ref=e592] [cursor=pointer]:
+                    - /url: /#faq
+                - listitem [ref=e593]:
+                  - link "Get Involved" [ref=e594] [cursor=pointer]:
+                    - /url: /get-involved
+            - generic [ref=e595]:
+              - heading "Community" [level=3] [ref=e596]
+              - list [ref=e597]:
+                - listitem [ref=e598]:
+                  - link "Twitter / X" [ref=e599] [cursor=pointer]:
+                    - /url: https://x.com
+                - listitem [ref=e600]:
+                  - link "Telegram" [ref=e601] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e602]:
+                  - link "Luma" [ref=e603] [cursor=pointer]:
+                    - /url: "#"
+            - generic [ref=e604]:
+              - heading "Ecosystem" [level=3] [ref=e605]
+              - list [ref=e606]:
+                - listitem [ref=e607]:
+                  - link "Superteam Global" [ref=e608] [cursor=pointer]:
+                    - /url: "#"
+                - listitem [ref=e609]:
+                  - link "Solana" [ref=e610] [cursor=pointer]:
+                    - /url: https://solana.com
+                - listitem [ref=e611]:
+                  - link "Superteam Earn" [ref=e612] [cursor=pointer]:
+                    - /url: "#"
+        - paragraph [ref=e613]: Accelerating founders, creatives & institutions driving internet capital markets on solana
+  - button "Open Next.js Dev Tools" [ref=e619] [cursor=pointer]:
+    - img [ref=e620]
+  - alert [ref=e623]

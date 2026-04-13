@@ -29,9 +29,10 @@ If Sanity returns no home layout, the app uses the **default section stack** in 
 | **Builders** | Home “Australian Solana Builders” grid: up to **7 featured** published profiles from Supabase when read credentials are set; **loading skeleton** while fetching; if the database is empty but configured, a dashed callout explains how listings get published and links to Get Involved + full directory; if Supabase isn’t configured for reads, **curated mock cards** keep the section demo-ready. |
 | **Community** | X/Twitter-style **social proof** section (curated post layout with avatars, links, quoted tweets) to mirror ecosystem activity. |
 | **FAQ** | Accordion (**Radix-style**) with four questions covering what ST AU is, how to get involved, opportunities, and institutions. |
+| **Partners** | "Ecosystem & Partners" grid showcasing partner logos — grayscale by default, colorful on hover. Configurable via `lib/config/partners.ts`; renders nothing when empty. |
 | **Footer** | Superteam AU logo, **Navigate** (About, Members, FAQ, Get Involved), **Community** (X, Telegram, Luma placeholders), **Ecosystem** (global Superteam, Solana, Earn), plus layout tuned for the brand palette. |
 
-**Sanity-controlled home:** When a Sanity `home` document defines `sections`, `PageSections` renders the same building blocks in **editor-chosen order** (`heroSection`, `tickerSection`, `whatWeDoSection`, `eventsSection`, `buildersSection`, `communitySection`, `faqSection`). Unknown block types are ignored with a console warning.
+**Sanity-controlled home:** When a Sanity `home` document defines `sections`, `PageSections` renders the same building blocks in **editor-chosen order** (`heroSection`, `tickerSection`, `whatWeDoSection`, `eventsSection`, `buildersSection`, `communitySection`, `faqSection`, `partnersSection`, `joinCtaSection`). Unknown block types are ignored with a console warning.
 
 **SEO & previews:** Root `metadata` sets title and description; home uses ISR-style **`revalidate = 60`**. Root layout includes **Sanity Live** and, in **draft mode**, Visual Editing overlay plus a control to exit draft.
 

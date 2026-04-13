@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "node --dns-result-order=ipv4first --env-file=.env.local scripts/apply-migration.mjs",
-    "db:push": "npx supabase db push"
+    "db:push": "npx supabase db push",
+    "supabase:ping": "node --env-file=.env.local scripts/supabase-ping.mjs",
+    "db:apply": "npx supabase db query --linked -f supabase/migrations/20260413120000_member_intake.sql"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

@@ -14,8 +14,8 @@ import dns from "node:dns";
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseIntoClientConfig } from "pg-connection-string";
 import pg from "pg";
-import pgConn from "pg-connection-string";
 
 dns.setDefaultResultOrder("ipv4first");
 
@@ -59,7 +59,7 @@ async function createMigrationClient(connectionString) {
     return new pg.Client({ connectionString, ssl: false });
   }
 
-  const config = pgConn.parseIntoClientConfig(connectionString);
+  const config = parseIntoClientConfig(connectionString);
   const host = config.host;
 
   if (!host || isIpv4Literal(host)) {

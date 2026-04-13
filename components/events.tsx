@@ -5,6 +5,10 @@ import {
   MapPin,
   VideoCamera,
 } from "@phosphor-icons/react/ssr";
+import { ArrowSquareOut } from "@phosphor-icons/react/ssr";
+
+import { PrimaryButton } from "@/components/ui/primary-button";
+import { LUMA_CALENDAR_URL } from "@/lib/luma";
 
 const STATS = [
   {
@@ -186,6 +190,20 @@ export function Events() {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div className="mt-8 flex justify-center lg:justify-start">
+          <PrimaryButton asChild>
+            <a
+              href={LUMA_CALENDAR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2"
+            >
+              View all events on Luma
+              <ArrowSquareOut className="size-5" weight="bold" />
+            </a>
+          </PrimaryButton>
         </div>
       </div>
     </section>

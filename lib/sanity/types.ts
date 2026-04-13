@@ -39,14 +39,41 @@ export type FaqSectionBlock = {
   _type: "faqSection";
 };
 
+export type PartnersSectionBlock = {
+  _key: string;
+  _type: "partnersSection";
+  title?: string | null;
+  partners?: Array<{
+    _key: string;
+    name: string;
+    logo?: { asset?: { url?: string } };
+    url: string;
+  }> | null;
+};
+
+export type JoinCtaSectionBlock = {
+  _key: string;
+  _type: "joinCtaSection";
+  headline?: string | null;
+  subheadline?: string | null;
+  buttons?: Array<{
+    _key: string;
+    label: string;
+    href: string;
+    external?: boolean;
+  }> | null;
+};
+
 export type HomeSectionBlock =
   | HeroSectionBlock
   | TickerSectionBlock
   | WhatWeDoSectionBlock
   | EventsSectionBlock
   | BuildersSectionBlock
+  | PartnersSectionBlock
   | CommunitySectionBlock
-  | FaqSectionBlock;
+  | FaqSectionBlock
+  | JoinCtaSectionBlock;
 
 export type HomePageDocument = {
   _id: string;

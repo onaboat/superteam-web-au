@@ -30,12 +30,14 @@ function TickerTrack() {
 
 export function Ticker() {
   return (
-    <section className="ticker-tilt relative z-10 -mt-7 w-[calc(100%+64px)] -translate-x-[32px] overflow-hidden bg-chart-1 sm:-mt-4 sm:w-[calc(100%+96px)] sm:-translate-x-[48px] lg:-mt-7 lg:w-[calc(100%+120px)] lg:-translate-x-[60px]">
-      <div className="ticker-scroll flex w-max items-center">
-        <TickerTrack />
-        <TickerTrack />
-        <TickerTrack />
-      </div>
-    </section>
+    <div className="w-full max-w-full overflow-x-clip">
+      <section className="ticker-tilt relative z-10 -mt-7 w-[calc(100%+64px)] -translate-x-[32px] overflow-hidden bg-chart-1 sm:-mt-4 sm:w-[calc(100%+96px)] sm:-translate-x-[48px] lg:-mt-7 lg:w-[calc(100%+120px)] lg:-translate-x-[60px]">
+        <div className="ticker-scroll flex w-max items-center">
+          <TickerTrack />
+          <TickerTrack />
+          <TickerTrack />
+        </div>
+      </section>
+    </div>
   );
 }

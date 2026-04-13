@@ -6,8 +6,10 @@ import { Events } from "@/components/events";
 import { Faq } from "@/components/faq";
 import { Footer } from "@/components/footer";
 import { Hero } from "@/components/hero";
+import { JoinCta } from "@/components/join-cta";
 import { Navbar } from "@/components/navbar";
 import { PageSections } from "@/components/page-sections";
+import { Partners } from "@/components/partners";
 import { Ticker } from "@/components/ticker";
 import { WhatWeDo } from "@/components/what-we-do";
 import { fetchHomePage } from "@/lib/sanity/fetch-home-page";
@@ -38,8 +40,10 @@ export default async function Home() {
             <Suspense fallback={<BuildersSectionSkeleton />}>
               <Builders />
             </Suspense>
+            <Partners />
             <Community />
             <Faq />
+            <JoinCta />
           </>
         )}
       </main>

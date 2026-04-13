@@ -2,10 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 const NAVIGATE_LINKS = [
-  { label: "About", href: "#" },
-  { label: "Members", href: "#" },
-  { label: "Frequently asked questions", href: "#" },
-  { label: "Get Involved", href: "#" },
+  { label: "About", href: "/#about" },
+  { label: "Members", href: "/members" },
+  { label: "Frequently asked questions", href: "/#faq" },
+  { label: "Get Involved", href: "/get-involved" },
 ] as const;
 
 const COMMUNITY_LINKS = [

@@ -42,7 +42,7 @@ const FAQ_ITEMS: FaqItem[] = [
 
 export function Faq() {
   return (
-    <section className="w-full bg-background py-14 sm:py-18">
+    <section id="faq" className="w-full scroll-mt-24 bg-background py-14 sm:py-18">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
         <h2 className="text-4xl font-black leading-tight text-chart-1 sm:text-5xl">
           Frequently Asked Questions

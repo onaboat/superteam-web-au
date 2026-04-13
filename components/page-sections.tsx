@@ -1,4 +1,6 @@
-import { Builders } from "@/components/builders";
+import { Suspense } from "react";
+
+import { Builders, BuildersSectionSkeleton } from "@/components/builders";
 import { Community } from "@/components/community";
 import { Events } from "@/components/events";
 import { Faq } from "@/components/faq";
@@ -19,7 +21,11 @@ export function PageSections({ sections }: { sections: HomeSectionBlock[] }) {
       case "eventsSection":
         return <Events key={block._key} />;
       case "buildersSection":
-        return <Builders key={block._key} />;
+        return (
+          <Suspense key={block._key} fallback={<BuildersSectionSkeleton />}>
+            <Builders />
+          </Suspense>
+        );
       case "communitySection":
         return <Community key={block._key} />;
       case "faqSection":

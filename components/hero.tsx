@@ -26,7 +26,7 @@ export function Hero({ block }: HeroProps) {
   const tagline = block?.tagline?.trim() || defaultCopy.tagline;
 
   return (
-    <section className="relative w-full overflow-hidden bg-hero">
+    <section id="about" className="relative w-full scroll-mt-24 overflow-hidden bg-hero">
       <HeroAusEffect />
       <div className="mx-auto flex min-h-[min(70vh,680px)] w-full max-w-6xl items-start px-5 pb-14 pt-28 sm:px-10 sm:pb-18 sm:pt-32 lg:px-16 lg:pt-36">
         <div className="relative z-10 max-w-[820px] space-y-6 sm:space-y-10">

@@ -7,7 +7,7 @@ import { PrimaryButton } from "@/components/ui/primary-button";
 const navItems = [
   { label: "About", href: "/#about" },
   { label: "Events", href: LUMA_CALENDAR_URL },
-  { label: "Members", href: "/#members" },
+  { label: "Members", href: "/members" },
   { label: "FAQ", href: "/#faq" },
 ] as const;
 
@@ -54,7 +54,7 @@ export function Navbar() {
           </nav>
 
           <PrimaryButton asChild className="h-10 px-4 text-sm sm:h-12 sm:px-7 sm:text-lg">
-            <Link href="/#get-involved">Get Involved</Link>
+            <Link href="/get-involved">Get Involved</Link>
           </PrimaryButton>
         </div>
       </div>

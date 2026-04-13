@@ -1,4 +1,6 @@
-import { Builders } from "@/components/builders";
+import { Suspense } from "react";
+
+import { Builders, BuildersSectionSkeleton } from "@/components/builders";
 import { Community } from "@/components/community";
 import { Events } from "@/components/events";
 import { Faq } from "@/components/faq";
@@ -33,7 +35,9 @@ export default async function Home() {
             <Ticker />
             <WhatWeDo />
             <Events />
-            <Builders />
+            <Suspense fallback={<BuildersSectionSkeleton />}>
+              <Builders />
+            </Suspense>
             <Community />
             <Faq />
           </>

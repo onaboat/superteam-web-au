@@ -16,9 +16,7 @@
 
 ---
 
-## Figma Design
 
-The [Figma prototype](https://www.figma.com/proto/NddY9YQxw9N7p0VbyNUKhZ/super-team-aus-website?node-id=36-53529&viewport=-321%2C-656%2C0.06&t=s4yfM4pKrHMp9ai6-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1) includes:
 
 
 

@@ -8,7 +8,7 @@ export function JoinCta() {
   return (
     <section className="w-full bg-background py-14 sm:py-18">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
-        <h2 className="text-headdingbig ">
+        <h2 className="text-headingbig ">
           {JOIN_CTA.headline}
         </h2>
         <p className="mt-4 text-subheading ">

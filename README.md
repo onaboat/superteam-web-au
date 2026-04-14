@@ -1,8 +1,34 @@
-# Superteam Australia — website
+# Superteam Australia — Website
 
-**Open challenge entry:** a production-oriented marketing site for **Superteam Australia** — the Solana builder community in Australia — with editorial control through a headless CMS and real member data on **Supabase**.
+**Open Challenge Submission** for the official Superteam Australia website.
 
-This README is the submission overview: what we built, how operators run it, and how it lines up with the challenge (without restating the brief verbatim).
+---
+
+## Deliverables
+
+| Deliverable | Link |
+|-------------|------|
+| **Live Demo** | [superteam-aus-web.vercel.app](https://superteam-aus-web.vercel.app/) |
+| **Figma Prototype** | [View Design](https://www.figma.com/proto/NddY9YQxw9N7p0VbyNUKhZ/super-team-aus-website?node-id=36-53529&viewport=-321%2C-656%2C0.06&t=s4yfM4pKrHMp9ai6-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1) |
+| **GitHub Repository** | This repo |
+| **Documentation** | This README |
+| **Sanity Studio** | [CMS Dashboard](https://www.sanity.io/@ocTCNsYFX/studio/s1v58b19luj6hrcj147kcevu/default/structure) |
+
+---
+
+## Figma Design
+
+The [Figma prototype](https://www.figma.com/proto/NddY9YQxw9N7p0VbyNUKhZ/super-team-aus-website?node-id=36-53529&viewport=-321%2C-656%2C0.06&t=s4yfM4pKrHMp9ai6-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1) includes:
+
+
+
+---
+
+## Overview
+
+A production-oriented marketing site for **Superteam Australia** — the Solana builder community in Australia — with editorial control through a headless CMS and real member data on **Supabase**.
+
+This README is the submission overview: what we built, how operators run it, and how it lines up with the challenge.
 
 ## What we shipped
 
@@ -90,16 +116,78 @@ Headless CMS (**Sanity**) for landing copy and blocks:
 
 This repo tracks a **current-generation Next.js** release. If an API surprises you versus older docs, prefer `node_modules/next/dist/docs/` in this project.
 
-## How this maps to the challenge (at a glance)
+---
 
-| Theme | What this entry does |
-|--------|----------------------|
-| Global Superteam + Australian identity | Visual system, ST AU logo, narrative sections tuned for the AU chapter |
-| Get involved | Onboarding flow + Supabase intake |
-| Members / talent | Directory UI + filters + published profiles from Supabase |
-| Events | Luma as source of truth for calendar links; events section + optional live API |
-| Living platform | Sanity for editors; Supabase for structured data and approvals |
-| Product-minded delivery | Typed env, migrations, docs for operators, deploy-ready split of anon vs service keys |
+## Design Rationale
+
+### Visual Identity
+
+The design bridges the **global Superteam brand** with a distinct **Australian identity**:
+
+- **Color palette** — Superteam's signature yellow/green primary with dark backgrounds, maintaining brand consistency across the global network
+- **Typography** — Bold, confident headings that mirror the energy of other Superteam chapters while feeling fresh
+- **Australian elements** — Subtle canvas-style background treatment in the hero (`HeroAusEffect`) evokes the Australian landscape without being literal or cliché
+- **Solana integration** — The Solana wordmark is embedded directly in the hero headline, reinforcing the ecosystem connection
+
+### Information Architecture
+
+The site is structured to serve multiple audiences:
+
+1. **Builders & developers** — Clear pathways to Get Involved, skill-based member filtering, events calendar
+2. **Founders** — Mission clarity, capital/fundraising messaging, talent discovery
+3. **Institutions** — Professional presentation, clear FAQ about engagement, credible ecosystem partners
+4. **Creatives & operators** — Visible role representation in onboarding, diverse skill tags in directory
+
+### Platform Philosophy
+
+This isn't a static brochure — it's a **living platform**:
+
+- **Structured onboarding** captures member data that can power matching, outreach, and ecosystem analytics
+- **Approval workflow** ensures quality control before profiles go public
+- **CMS-driven content** lets operators update messaging without deployments
+- **Modular sections** can be reordered or extended as the chapter evolves
+
+---
+
+## How this maps to the challenge
+
+### Landing Page Requirements
+
+| Requirement | Implementation |
+|-------------|----------------|
+| **Hero Section** | Large headline, Solana wordmark, Australian background treatment, clear CTAs |
+| **Mission / What We Do** | Six pillars: Builder Support, Capital, Growth, Talent, Ecosystem, Institutional |
+| **Stats / Impact** | Animated ticker with members, events, projects counts |
+| **Events** | Timeline cards with Luma integration, virtual/physical indicators, tags |
+| **Members / Talent** | Featured builders grid on home, full directory at `/members` |
+| **Ecosystem / Partners** | Logo grid with hover effects, configurable via `lib/config/partners.ts` |
+| **Community** | X/Twitter-style social proof section with embedded posts |
+| **FAQ** | Radix accordion with four core questions |
+| **Join CTA** | Links to Telegram, Discord, X/Twitter |
+| **Footer** | Logo, navigation, community links, ecosystem links |
+| **Get Involved Form** | Multi-step wizard with validation, Supabase persistence |
+
+### Members Page Requirements
+
+| Requirement | Implementation |
+|-------------|----------------|
+| **Search & Filter** | Full-text search + skill-based filter chips |
+| **Skill Filters** | Core Team, Rust, Frontend, Design, Content, Growth, Product, Community |
+| **Member Cards** | Photo, name, title, company, skills, X/Twitter link |
+| **Animations** | Hover lift effects, smooth transitions |
+
+### Technical Requirements
+
+| Requirement | Implementation |
+|-------------|----------------|
+| **Next.js + React** | Next.js 16, React 19, App Router |
+| **Tailwind CSS** | Fully responsive, mobile-first |
+| **Supabase** | Members database, applications, RLS policies |
+| **Luma Integration** | Calendar URL + optional API for live listings |
+| **CMS** | Sanity with admin studio, role-based access |
+| **SEO** | Metadata, ISR revalidation, semantic HTML |
+
+
 
 ## Run locally
 
@@ -173,6 +261,42 @@ Intake: `member_applications`. Public directory: `member_profiles` with `publish
 ### Deploy
 
 Mirror `.env.local` on the host (e.g. Vercel): public **anon** key only in client-exposed vars; **`SUPABASE_SERVICE_ROLE_KEY`** server-only.
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         FRONTEND                                │
+│                   Next.js 16 (App Router)                       │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐  │
+│  │  Landing    │  │  Members    │  │  Get Involved           │  │
+│  │  Page (/)   │  │  (/members) │  │  (/get-involved)        │  │
+│  └─────────────┘  └─────────────┘  └─────────────────────────┘  │
+└────────────────────────┬────────────────────────────────────────┘
+                         │
+         ┌───────────────┼───────────────┐
+         ▼               ▼               ▼
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│   SANITY    │  │  SUPABASE   │  │    LUMA     │
+│   (CMS)     │  │  (Database) │  │   (Events)  │
+├─────────────┤  ├─────────────┤  ├─────────────┤
+│ • Home page │  │ • member_   │  │ • Calendar  │
+│   content   │  │   profiles  │  │   URL       │
+│ • Section   │  │ • member_   │  │ • Event API │
+│   ordering  │  │   applica-  │  │   (optional)│
+│ • Editorial │  │   tions     │  │             │
+│   studio    │  │ • RLS       │  │             │
+└─────────────┘  └─────────────┘  └─────────────┘
+```
+
+### Data Flow
+
+1. **Content** — Sanity serves editable marketing copy and section configuration
+2. **Applications** — Get Involved form → server action → Supabase `member_applications`
+3. **Directory** — Operators approve applications → `member_profiles` with `published=true` → public directory
+4. **Events** — Luma calendar for official events, optional API for live listings
 
 ---
 

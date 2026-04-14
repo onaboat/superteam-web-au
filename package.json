@@ -6,19 +6,30 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:migrate": "node --dns-result-order=ipv4first --env-file=.env.local scripts/apply-migration.mjs",
+    "db:push": "npx supabase db push",
+    "supabase:ping": "node --env-file=.env.local scripts/supabase-ping.mjs",
+    "db:apply": "npx supabase db query --linked -f supabase/migrations/20260413120000_member_intake.sql",
+    "db:seed:members": "node --dns-result-order=ipv4first --env-file=.env.local scripts/seed-member-profiles.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
+    "@sanity/client": "^7.20.0",
+    "@sanity/image-url": "^2.1.1",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.103.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "next": "16.2.3",
+    "next-sanity": "^12.2.2",
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "shadcn": "^4.2.0",
     "tailwind-merge": "^3.5.0",
-    "tw-animate-css": "^1.4.0"
+    "tw-animate-css": "^1.4.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -27,6 +38,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.3",
+    "pg": "^8.20.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

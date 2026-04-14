@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superteam Effect</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #FF742C; overflow: hidden; }
+canvas { display: block; width: 100%; height: 100%; }
+#controls {
+  position: fixed; top: 16px; right: 16px; z-index: 10;
+  display: flex; gap: 8px;
+}
+#controls button {
+  padding: 8px 16px; border: 1px solid #444; border-radius: 6px;
+  background: #1a1a1a; color: #fff; font: 13px/1 system-ui;
+  cursor: pointer; transition: background 0.15s;
+}
+#controls button:hover { background: #333; }
+#controls button.recording { background: #c22; border-color: #f44; }
+#controls .status { color: #888; font: 12px/1 system-ui; padding: 8px 4px; }
+</style>
+</head>
+<body>
+<div id="controls">
+  <button id="btnRecord">Record Video</button>
+  <button id="btnSvgFrames">Export SVG Frames</button>
+  <select id="animType" style="padding:8px;border:1px solid #444;border-radius:6px;background:#1a1a1a;color:#fff;font:13px/1 system-ui;">
+    <option value="wave">Radial Wave</option>
+    <option value="spiral">Spiral</option>
+    <option value="rain">Rain</option>
+    <option value="wipeH">Horizontal Wipe</option>
+    <option value="wipeD">Diagonal Wipe</option>
+    <option value="pop">Random Pop</option>
+    <option value="corners">Corners In</option>
+    <option value="checkerboard">Checkerboard</option>
+    <option value="typewriter">Typewriter</option>
+    <option value="vortex">Vortex</option>
+    <option value="blinds">Blinds</option>
+    <option value="pinwheel">Pinwheel</option>
+    <option value="diamond">Diamond</option>
+    <option value="snake">Snake</option>
+    <option value="heartbeat">Heartbeat</option>
+    <option value="scatter">Scatter</option>
+  </select>
+  <button id="btnPreview">Preview</button>
+  <label style="color:#888;font:12px/1 system-ui;padding:8px 4px;"><input id="waveProgress" type="range" min="0" max="100" value="50" style="vertical-align:middle;width:120px;"><span id="waveVal">50%</span></label>
+  <label style="color:#888;font:12px/1 system-ui;padding:8px 4px;">Edge <input id="edgeSoftness" type="range" min="1" max="80" value="8" style="vertical-align:middle;width:80px;"><span id="edgeVal">0.08</span></label>
+  <button id="btnStills">Export Stills</button>
+  <label style="color:#888;font:12px/1 system-ui;padding:8px 4px;">BG <input id="bgColor" type="color" value="#FF742C" style="vertical-align:middle;width:32px;height:24px;border:1px solid #444;border-radius:4px;background:none;cursor:pointer;"></label>
+  <span class="status" id="status"></span>
+</div>
+<canvas></canvas>
+<script>
+// ── CONFIG (same as original) ──────────────────────────────
+var gap = 25;
+var radiusVmin = 40;
+var speedIn = 0.5;
+var speedOut = 0.6;
+var restScale = 0.09;
+var minHoverScale = 0.9;
+var maxHoverScale = 1.4;
+var waveSpeed = 1200;
+var waveWidth = 180;
+
+var PALETTE = [
+  { type: 'solid', value: '#22c55e' },
+  { type: 'solid', value: '#06b6d4' },
+  { type: 'solid', value: '#f97316' },
+  { type: 'solid', value: '#ef4444' },
+  { type: 'solid', value: '#facc15' },
+  { type: 'solid', value: '#ec4899' },
+  { type: 'solid', value: '#9ca3af' },
+  { type: 'solid', value: '#a78bfa' },
+  { type: 'solid', value: '#60a5fa' },
+  { type: 'solid', value: '#34d399' },
+  { type: 'gradient', stops: ['#6366f1', '#3b82f6'] },
+  { type: 'gradient', stops: ['#06b6d4', '#6366f1'] },
+  { type: 'gradient', stops: ['#22c55e', '#06b6d4'] },
+  { type: 'gradient', stops: ['#f97316', '#ef4444'] },
+  { type: 'gradient', stops: ['#8b5cf6', '#06b6d4'] },
+  { type: 'gradient', stops: ['#3b82f6', '#8b5cf6'] },
+  { type: 'gradient', stops: ['#34d399', '#3b82f6'] },
+];
+
+// ── SVG IMAGES ─────────────────────────────────────────────
+var SVG_SOURCES = [
+  { name: 'Solana',        file: 'svg/Solana Logomark - White.svg', aspect: 1 },
+  { name: 'Australia',     file: 'svg/Australia.svg',                aspect: 1 },
+  { name: 'Emu',           file: 'svg/Emu.svg',                     aspect: 1 },
+  { name: 'Kangaroo',      file: 'svg/Kangaroo.svg',                aspect: 1 },
+  { name: 'FrillLizzard',  file: 'svg/Frill-Lizzard.svg',           aspect: 1 },
+  { name: 'Lizzard',       file: 'svg/Lizzard.svg',                 aspect: 1 },
+  { name: 'KBird',         file: 'svg/K-Bird.svg',                  aspect: 1 },
+  { name: 'GBird',         file: 'svg/G-Bird.svg',                  aspect: 1 },
+  { name: 'Echidna',       file: 'svg/Echidna.svg',                 aspect: 1 },
+  { name: 'Platypus',      file: 'svg/Platypus.svg',                aspect: 1 },
+];
+
+var TINTS = ['#FECE00', '#00833E'];
+
+var SHAPE_TYPES = ['circle', 'pill', 'star', 'star'];
+
+var canvas = document.querySelector('canvas');
+var ctx = canvas.getContext('2d');
+
+var bgColor = '#FF742C';
+var bgInput = document.getElementById('bgColor');
+bgInput.addEventListener('input', function(e) {
+  bgColor = e.target.value;
+  document.body.style.background = bgColor;
+});
+
+var grid = null;
+var rafId = null;
+var pointer = null;
+var activity = 0;
+var waves = [];
+var maskRects = [];
+var frameCount = 0;
+var maskOverride = false;
+var svgFrames = [];
+var capturingSvg = false;
+var svgFrameCount = 0;
+var svgMaxFrames = 0;
+var previewMode = false;
+
+var svgImages = [];
+var svgImagesReady = 0;
+
+function rnd(min, max) { return Math.random() * (max - min) + min; }
+function rndInt(min, max) { return Math.floor(rnd(min, max + 1)); }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function smoothstep(t) {
+  var c = Math.max(0, Math.min(1, t));
+  return c * c * (3 - 2 * c);
+}
+
+function durationToFactor(seconds) {
+  if (seconds <= 0) return 1;
+  return 1 - Math.pow(0.05, 1 / (60 * seconds));
+}
+
+// ── Original shape drawing (fallback when no SVGs assigned) ──
+function drawCircle(ctx, size) {
+  ctx.beginPath();
+  ctx.arc(0, 0, size, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawPill(ctx, size) {
+  var w = size * 0.48;
+  var h = size;
+  ctx.beginPath();
+  ctx.roundRect(-w, -h, w * 2, h * 2, w);
+  ctx.fill();
+}
+
+function drawStar(ctx, size, points, innerRatio) {
+  ctx.beginPath();
+  for (var i = 0; i < points * 2; i++) {
+    var angle = (i * Math.PI) / points - Math.PI / 2;
+    var r = i % 2 === 0 ? size : size * innerRatio;
+    var x = Math.cos(angle) * r;
+    var y = Math.sin(angle) * r;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawShape(ctx, shape) {
+  switch (shape.type) {
+    case 'circle': return drawCircle(ctx, shape.size / 1.5);
+    case 'pill':   return drawPill(ctx, shape.size / 1.4);
+    case 'star':   return drawStar(ctx, shape.size, shape.points, shape.innerRatio);
+  }
+}
+
+function resolveFill(ctx, colorDef, size) {
+  if (colorDef.type === 'solid') return colorDef.value;
+  var grad = ctx.createRadialGradient(0, -size * 0.3, 0, 0, size * 0.3, size * 1.5);
+  grad.addColorStop(0, colorDef.stops[0]);
+  grad.addColorStop(1, colorDef.stops[1]);
+  return grad;
+}
+
+function randomStarProps() {
+  return {
+    points: rndInt(4, 10),
+    innerRatio: rnd(0.1, 0.5),
+  };
+}
+
+// ── Load SVGs: fetch text, replace fill="white" with tint, base64 → Image ──
+// svgImages layout: [src0-tint0, src0-tint1, src1-tint0, src1-tint1, ...]
+// index = srcIdx * TINTS.length + tintIdx
+function loadSvgImages(callback) {
+  var total = SVG_SOURCES.length * TINTS.length;
+  if (total === 0) { callback(); return; }
+  svgImages = new Array(total);
+
+  SVG_SOURCES.forEach(function(src, srcIdx) {
+    fetch(src.file).then(function(r) { return r.text(); }).then(function(svgText) {
+      TINTS.forEach(function(color, tintIdx) {
+        var idx = srcIdx * TINTS.length + tintIdx;
+        // Only recolor fill="white" on path/circle/polygon elements, skip rect (used in clipPath/mask)
+        var tinted = svgText.replace(/(<(?:path|circle|polygon)\b[^>]*?)fill="white"/g, '$1fill="' + color + '"');
+        var img = new Image();
+        img.onload = function() {
+          svgImages[idx] = { img: img, aspect: src.aspect, rawSvg: tinted };
+          svgImagesReady++;
+          if (svgImagesReady === total) callback();
+        };
+        img.src = 'data:image/svg+xml;base64,' + btoa(tinted);
+      });
+    });
+  });
+}
+
+function buildGrid() {
+  var W = window.innerWidth;
+  var H = window.innerHeight;
+  var cols = Math.floor(W / gap);
+  var rows = Math.floor(H / gap);
+  var offsetX = (W - (cols - 1) * gap) / 2;
+  var offsetY = (H - (rows - 1) * gap) / 2;
+  var shapes = [];
+  var hasSvgs = svgImages.length > 0;
+
+  var numTints = TINTS.length;
+  // Build a 2D array to track assigned indices and avoid neighbors
+  var grid2d = [];
+  for (var row = 0; row < rows; row++) {
+    grid2d[row] = [];
+    for (var col = 0; col < cols; col++) {
+      var type = pick(SHAPE_TYPES);
+
+      // Pick an SVG variant: avoid same shape OR same color as left/above neighbor
+      var svgIdx = -1;
+      if (hasSvgs) {
+        var neighborIdxs = [];
+        if (col > 0) neighborIdxs.push(grid2d[row][col - 1]);
+        if (row > 0) neighborIdxs.push(grid2d[row - 1][col]);
+
+        // Get which source shapes and tint colors to avoid
+        var avoidSrc = [];
+        var avoidTint = [];
+        for (var n = 0; n < neighborIdxs.length; n++) {
+          var ni = neighborIdxs[n];
+          avoidSrc.push(Math.floor(ni / numTints));
+          avoidTint.push(ni % numTints);
+        }
+
+        var candidates = [];
+        for (var ci = 0; ci < svgImages.length; ci++) {
+          var ciSrc = Math.floor(ci / numTints);
+          var ciTint = ci % numTints;
+          if (avoidSrc.indexOf(ciSrc) === -1 && avoidTint.indexOf(ciTint) === -1) {
+            candidates.push(ci);
+          }
+        }
+        // Fallback: just avoid same exact index
+        if (candidates.length === 0) {
+          for (var ci = 0; ci < svgImages.length; ci++) {
+            if (neighborIdxs.indexOf(ci) === -1) candidates.push(ci);
+          }
+        }
+        svgIdx = candidates.length > 0 ? pick(candidates) : Math.floor(Math.random() * svgImages.length);
+      }
+      grid2d[row][col] = svgIdx;
+
+      var shape = {
+        x: offsetX + col * gap,
+        y: offsetY + row * gap,
+        type: type,
+        color: pick(PALETTE),
+        angle: rnd(0, Math.PI * 2),
+        size: gap * 0.65,
+        scale: restScale,
+        maxScale: rnd(minHoverScale, maxHoverScale),
+        hovered: false,
+        svgIndex: svgIdx,
+      };
+      if (type === 'star') Object.assign(shape, randomStarProps());
+      shapes.push(shape);
+    }
+  }
+
+  return { shapes: shapes, width: W, height: H };
+}
+
+function init() {
+  var W = window.innerWidth;
+  var H = window.innerHeight;
+  var dpr = window.devicePixelRatio || 1;
+
+  canvas.width = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.scale(dpr, dpr);
+
+  grid = buildGrid();
+}
+
+function renderPreview() {
+  if (!grid) return;
+  var progress = parseInt(document.getElementById('waveProgress').value) / 100;
+  applyAnimation(grid, progress);
+
+  var shapes = grid.shapes;
+  var width = grid.width;
+  var height = grid.height;
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, width, height);
+
+  var maxCell = gap * 0.92;
+  for (var i = 0; i < shapes.length; i++) {
+    var shape = shapes[i];
+    if (shape.scale < restScale * 0.15) continue;
+    if (shape.svgIndex >= 0) {
+      var svgData = svgImages[shape.svgIndex];
+      var drawH = shape.size * 2 * shape.scale;
+      var drawW = drawH * svgData.aspect;
+      if (drawH > maxCell) { drawH = maxCell; drawW = drawH * svgData.aspect; }
+      if (drawW > maxCell) { drawW = maxCell; drawH = drawW / svgData.aspect; }
+      ctx.drawImage(svgData.img, shape.x - drawW / 2, shape.y - drawH / 2, drawW, drawH);
+    }
+  }
+}
+
+function tick() {
+  if (!grid) { rafId = requestAnimationFrame(tick); return; }
+
+  if (previewMode) {
+    renderPreview();
+    rafId = requestAnimationFrame(tick);
+    return;
+  }
+
+  var shapes = grid.shapes;
+  var width = grid.width;
+  var height = grid.height;
+  var radius = Math.min(width, height) * (radiusVmin / 100);
+  var now = performance.now();
+
+  ctx.clearRect(0, 0, width, height);
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, width, height);
+
+  activity *= 0.93;
+
+  frameCount++;
+  if (frameCount % 10 === 0) {
+    maskRects = Array.from(document.querySelectorAll('[data-shape-mask]'))
+      .map(function(el) { return el.getBoundingClientRect(); });
+  }
+
+  // Calculate animation progress from active waves
+  var diagDist = Math.sqrt(width * width + height * height);
+  var animDuration = (diagDist + waveWidth) / waveSpeed; // seconds
+  var hasActiveWave = waves.length > 0;
+
+  if (hasActiveWave) {
+    var elapsed = (now - waves[0].startTime) / 1000;
+    var animProgress = Math.min(elapsed / animDuration, 1);
+    applyAnimation(grid, animProgress);
+
+    // Once animation completes, remove wave so shapes can settle
+    if (animProgress >= 1) {
+      waves = [];
+    }
+  }
+
+  var lerpIn = durationToFactor(speedIn);
+  var lerpOut = durationToFactor(speedOut);
+
+  for (var i = 0; i < shapes.length; i++) {
+    var shape = shapes[i];
+    var pad = gap / 2;
+    var masked = !maskOverride && maskRects.some(function(r) {
+      return shape.x >= r.left - pad && shape.x <= r.right  + pad &&
+             shape.y >= r.top  - pad && shape.y <= r.bottom + pad;
+    });
+
+    if (masked) {
+      shape.scale += (0 - shape.scale) * lerpOut;
+      if (shape.scale < 0.005) shape.scale = 0;
+      continue;
+    }
+
+    // Compute hover target for this shape
+    var hoverTarget = restScale;
+    if (pointer && activity > 0.001) {
+      var dx = shape.x - pointer.x;
+      var dy = shape.y - pointer.y;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var pointerInfluence = smoothstep(1 - dist / radius) * activity;
+      if (pointerInfluence > 0.05) {
+        hoverTarget = restScale + pointerInfluence * (shape.maxScale - restScale);
+      }
+    }
+
+    if (!hasActiveWave) {
+      // Smoothly lerp toward hover target (or restScale if no hover)
+      var factor = hoverTarget > shape.scale ? lerpIn : lerpOut;
+      shape.scale += (hoverTarget - shape.scale) * factor;
+    } else {
+      // During wave animation, hover can only boost above the wave-set scale
+      if (hoverTarget > shape.scale) {
+        shape.scale += (hoverTarget - shape.scale) * lerpIn;
+      }
+    }
+
+    if (shape.scale < restScale * 0.15) continue;
+
+    // ── DRAW: SVG logo or original shape ──
+    if (shape.svgIndex >= 0) {
+      var svgData = svgImages[shape.svgIndex];
+      var drawH = shape.size * 2 * shape.scale;
+      var drawW = drawH * svgData.aspect;
+      var mc = gap * 0.92;
+      if (drawH > mc) { drawH = mc; drawW = drawH * svgData.aspect; }
+      if (drawW > mc) { drawW = mc; drawH = drawW / svgData.aspect; }
+      ctx.drawImage(svgData.img, shape.x - drawW / 2, shape.y - drawH / 2, drawW, drawH);
+    } else {
+      // Fallback: original colored shapes
+      ctx.save();
+      ctx.translate(shape.x, shape.y);
+      ctx.rotate(shape.angle);
+      ctx.scale(shape.scale, shape.scale);
+      ctx.fillStyle = resolveFill(ctx, shape.color, shape.size);
+      drawShape(ctx, shape);
+      ctx.restore();
+    }
+  }
+
+  // ── SVG frame capture (inside render loop) ──
+  if (capturingSvg) {
+    if (frameCount % 2 === 0) {
+      svgFrames.push(buildSvgFrame());
+      svgFrameCount++;
+      document.getElementById('status').textContent = 'Capturing frame ' + svgFrameCount + '/' + svgMaxFrames + '...';
+      if (svgFrameCount >= svgMaxFrames) {
+        capturingSvg = false;
+        downloadSvgFrames();
+      }
+    }
+  }
+
+  rafId = requestAnimationFrame(tick);
+}
+
+function onMove(e) {
+  pointer = { x: e.clientX, y: e.clientY };
+  activity = 1;
+}
+
+function onClick(e) {
+  triggerWave(e.clientX, e.clientY);
+}
+
+function triggerWave(x, y) {
+  x = x !== undefined ? x : window.innerWidth / 2;
+  y = y !== undefined ? y : window.innerHeight / 2;
+  waves.push({ x: x, y: y, startTime: performance.now() });
+  maskOverride = true;
+  var delay = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / waveSpeed;
+  setTimeout(function() { maskOverride = false; }, delay * 1000);
+}
+
+// ── VIDEO RECORDING ──────────────────────────────────────
+var recorder = null;
+var recordedChunks = [];
+var isRecording = false;
+
+function startRecording() {
+  recordedChunks = [];
+  var stream = canvas.captureStream(60);
+  recorder = new MediaRecorder(stream, { mimeType: 'video/webm;codecs=vp9', videoBitsPerSecond: 8000000 });
+  recorder.ondataavailable = function(e) { if (e.data.size > 0) recordedChunks.push(e.data); };
+  recorder.onstop = function() {
+    var blob = new Blob(recordedChunks, { type: 'video/webm' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = 'superteam-effect.webm'; a.click();
+    URL.revokeObjectURL(url);
+    document.getElementById('status').textContent = 'Video saved!';
+    setTimeout(function() { document.getElementById('status').textContent = ''; }, 3000);
+  };
+  recorder.start();
+  isRecording = true;
+  document.getElementById('btnRecord').classList.add('recording');
+  document.getElementById('btnRecord').textContent = 'Stop Recording';
+  document.getElementById('status').textContent = 'Recording...';
+}
+
+function stopRecording() {
+  recorder.stop();
+  isRecording = false;
+  document.getElementById('btnRecord').classList.remove('recording');
+  document.getElementById('btnRecord').textContent = 'Record Video';
+}
+
+function recordIntro() {
+  // Reset grid, start recording, fire wave, auto-stop when wave finishes
+  init();
+  startRecording();
+  waves = [];
+  triggerWave();
+  var diagDist = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
+  var totalTime = (diagDist + waveWidth) / waveSpeed * 1000 + 1500; // extra settle time
+  setTimeout(function() { if (isRecording) stopRecording(); }, totalTime);
+}
+
+document.getElementById('btnRecord').addEventListener('click', function(e) {
+  e.stopPropagation();
+  if (isRecording) { stopRecording(); } else { recordIntro(); }
+});
+
+// ── SVG FRAME EXPORT ─────────────────────────────────────
+function buildSvgFrame() {
+  if (!grid) return '';
+  var shapes = grid.shapes;
+  var W = grid.width;
+  var H = grid.height;
+
+  var parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">'];
+  parts.push('<rect width="' + W + '" height="' + H + '" fill="' + bgColor + '"/>');
+
+  for (var i = 0; i < shapes.length; i++) {
+    var shape = shapes[i];
+    if (shape.scale < restScale * 0.15) continue;
+    if (shape.svgIndex < 0) continue;
+
+    var svgData = svgImages[shape.svgIndex];
+    var drawH = shape.size * 2 * shape.scale;
+    var drawW = drawH * svgData.aspect;
+    var tx = shape.x - drawW / 2;
+    var ty = shape.y - drawH / 2;
+
+    parts.push('<image href="' + svgData.img.src + '" x="' + tx.toFixed(2) + '" y="' + ty.toFixed(2) + '" width="' + drawW.toFixed(2) + '" height="' + drawH.toFixed(2) + '"/>');
+  }
+
+  parts.push('</svg>');
+  return parts.join('\n');
+}
+
+function exportSvgFrames() {
+  // Reset and capture frames during the intro wave
+  init();
+  waves = [];
+  svgFrames = [];
+  svgFrameCount = 0;
+  var diagDist = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
+  var totalTimeSec = (diagDist + waveWidth) / waveSpeed + 1.5;
+  svgMaxFrames = Math.ceil(totalTimeSec * 30); // capture at ~30fps equivalent
+  capturingSvg = true;
+  triggerWave();
+  document.getElementById('status').textContent = 'Capturing SVG frames...';
+}
+
+function downloadSvgFrames() {
+  // Package as a zip-like download: individual SVG files in a single download sequence
+  // For simplicity, download as a single HTML file with embedded SVGs, or individual files
+  document.getElementById('status').textContent = 'Packaging ' + svgFrames.length + ' frames...';
+
+  // Create a zip using JSZip-free approach: download each as numbered files
+  // Using a simple blob-per-frame approach with a small delay
+  var totalFrames = svgFrames.length;
+
+  // Bundle into a single JSON file for easy processing
+  var manifest = {
+    width: grid.width,
+    height: grid.height,
+    frameCount: totalFrames,
+    fps: 30,
+    frames: svgFrames,
+  };
+
+  var blob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'superteam-svg-frames.json'; a.click();
+  URL.revokeObjectURL(url);
+
+  document.getElementById('status').textContent = totalFrames + ' SVG frames exported! (JSON with embedded SVGs)';
+  setTimeout(function() { document.getElementById('status').textContent = ''; }, 5000);
+  svgFrames = [];
+}
+
+document.getElementById('btnSvgFrames').addEventListener('click', function(e) {
+  e.stopPropagation();
+  exportSvgFrames();
+});
+
+// ── STILL EXPORT (Square, Portrait, Landscape) ─────────────
+var STILL_SIZES = [
+  { name: 'square-1x1',       w: 1080, h: 1080 },
+  { name: 'portrait-4x5',     w: 1080, h: 1350 },
+  { name: 'landscape-16x9',   w: 1920, h: 1080 },
+];
+
+function buildVirtualGrid(W, H) {
+  var cols = Math.floor(W / gap);
+  var rows = Math.floor(H / gap);
+  var offsetX = (W - (cols - 1) * gap) / 2;
+  var offsetY = (H - (rows - 1) * gap) / 2;
+  var shapes = [];
+  var hasSvgs = svgImages.length > 0;
+  var grid2d = [];
+  for (var row = 0; row < rows; row++) {
+    grid2d[row] = [];
+    for (var col = 0; col < cols; col++) {
+      var svgIdx = -1;
+      if (hasSvgs) {
+        var numTints = TINTS.length;
+        var neighborIdxs = [];
+        if (col > 0) neighborIdxs.push(grid2d[row][col - 1]);
+        if (row > 0) neighborIdxs.push(grid2d[row - 1][col]);
+
+        // Avoid same source shape AND same tint color as neighbors
+        var avoidSrc = [];
+        var avoidTint = [];
+        for (var n = 0; n < neighborIdxs.length; n++) {
+          var ni = neighborIdxs[n];
+          avoidSrc.push(Math.floor(ni / numTints));
+          avoidTint.push(ni % numTints);
+        }
+
+        var candidates = [];
+        for (var ci = 0; ci < svgImages.length; ci++) {
+          var ciSrc = Math.floor(ci / numTints);
+          var ciTint = ci % numTints;
+          if (avoidSrc.indexOf(ciSrc) === -1 && avoidTint.indexOf(ciTint) === -1) {
+            candidates.push(ci);
+          }
+        }
+        // Fallback: just avoid same exact index
+        if (candidates.length === 0) {
+          for (var ci = 0; ci < svgImages.length; ci++) {
+            if (neighborIdxs.indexOf(ci) === -1) candidates.push(ci);
+          }
+        }
+        svgIdx = candidates.length > 0 ? pick(candidates) : Math.floor(Math.random() * svgImages.length);
+      }
+      grid2d[row][col] = svgIdx;
+      shapes.push({
+        x: offsetX + col * gap,
+        y: offsetY + row * gap,
+        size: gap * 0.65,
+        scale: restScale,
+        maxScale: rnd(minHoverScale, maxHoverScale),
+        svgIndex: svgIdx,
+      });
+    }
+  }
+  return { shapes: shapes, width: W, height: H };
+}
+
+// ── ANIMATION TYPES ──────────────────────────────────────
+// Each takes (vGrid, progress 0..1) and sets shape.scale
+function applyAnimation(vGrid, progress) {
+  var type = document.getElementById('animType').value;
+  ANIMATIONS[type](vGrid, progress);
+}
+
+// Helper: two-phase animation.
+// normalizedDist: 0–1 position of shape along the animation axis
+// progress: 0–1 overall animation progress
+// First half (progress 0–0.5): leading edge reveals shapes (they stay full behind it)
+// Second half (progress 0.5–1): trailing edge from same direction shrinks shapes back
+// edge = soft transition width as fraction of total range
+function twoPhaseScale(normalizedDist, progress) {
+  var e = parseInt(document.getElementById('edgeSoftness').value) / 100;
+  if (progress <= 0.5) {
+    // Reveal phase: front moves 0→1, shapes behind front are full
+    var front = progress * 2; // 0→1 over first half
+    var d = front - normalizedDist;
+    if (d >= e) return 1;
+    if (d <= 0) return 0;
+    return d / e; // soft leading edge
+  } else {
+    // Un-reveal phase: trailing edge moves 0→1
+    var trail = (progress - 0.5) * 2; // 0→1 over second half
+    var d = trail - normalizedDist;
+    if (d >= e) return 0;
+    if (d <= 0) return 1;
+    return 1 - d / e; // soft trailing edge
+  }
+}
+
+var ANIMATIONS = {
+  wave: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var cx = W / 2, cy = H / 2;
+    var maxDist = Math.sqrt(W * W + H * H) / 2;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var dist = Math.sqrt((s.x - cx) * (s.x - cx) + (s.y - cy) * (s.y - cy));
+      var norm = dist / maxDist;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  spiral: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var cx = W / 2, cy = H / 2;
+    var maxDist = Math.sqrt(W * W + H * H) / 2;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var dx = s.x - cx, dy = s.y - cy;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var angle = (Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI);
+      var norm = (dist / maxDist + angle) / 2;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  rain: function(vGrid, progress) {
+    var H = vGrid.height;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var norm = s.y / H;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  wipeH: function(vGrid, progress) {
+    var W = vGrid.width;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var norm = s.x / W;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  wipeD: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var maxD = W + H;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var norm = (s.x + s.y) / maxD;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  pop: function(vGrid, progress) {
+    var shapes = vGrid.shapes;
+    if (!vGrid._popOrder) {
+      vGrid._popOrder = [];
+      for (var i = 0; i < shapes.length; i++) vGrid._popOrder.push(i);
+      for (var j = shapes.length - 1; j > 0; j--) {
+        var seed = (shapes[j].x * 7919 + shapes[j].y * 104729) & 0x7fffffff;
+        var k = seed % (j + 1);
+        var tmp = vGrid._popOrder[j];
+        vGrid._popOrder[j] = vGrid._popOrder[k];
+        vGrid._popOrder[k] = tmp;
+      }
+    }
+    var total = shapes.length;
+    for (var i = 0; i < total; i++) {
+      var norm = vGrid._popOrder[i] / total;
+      var t = twoPhaseScale(norm, progress);
+      shapes[i].scale = restScale + t * (shapes[i].maxScale - restScale);
+    }
+  },
+
+  corners: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var maxDist = Math.sqrt(W * W + H * H);
+    var crnrs = [[0,0],[W,0],[0,H],[W,H]];
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var minDist = Infinity;
+      for (var c = 0; c < 4; c++) {
+        var dist = Math.sqrt((s.x - crnrs[c][0]) * (s.x - crnrs[c][0]) + (s.y - crnrs[c][1]) * (s.y - crnrs[c][1]));
+        if (dist < minDist) minDist = dist;
+      }
+      var norm = minDist / (maxDist / 2);
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  checkerboard: function(vGrid, progress) {
+    var cols = Math.floor(vGrid.width / gap);
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var col = Math.round((s.x - gap / 2) / gap);
+      var row = Math.round((s.y - gap / 2) / gap);
+      // Checkerboard: even cells first (0–0.5), odd cells second (0.5–1)
+      var isEven = (col + row) % 2 === 0;
+      var norm = isEven ? (col + row * cols) / (vGrid.shapes.length) * 0.5
+                        : 0.5 + (col + row * cols) / (vGrid.shapes.length) * 0.5;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  typewriter: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var cols = Math.floor(W / gap);
+    var rows = Math.floor(H / gap);
+    var total = cols * rows;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var col = Math.round((s.x - gap / 2) / gap);
+      var row = Math.round((s.y - gap / 2) / gap);
+      // Row by row, left to right within each row
+      var norm = (row * cols + col) / total;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  vortex: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var cx = W / 2, cy = H / 2;
+    var maxDist = Math.sqrt(W * W + H * H) / 2;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var dx = s.x - cx, dy = s.y - cy;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var angle = (Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI);
+      // Spiral inward: outer edges + angle first, center last
+      var norm = 1 - (dist / maxDist * 0.6 + angle * 0.4);
+      norm = Math.max(0, Math.min(1, norm));
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  blinds: function(vGrid, progress) {
+    var H = vGrid.height;
+    var numBlinds = 8;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var row = s.y / H;
+      var blindIdx = Math.floor(row * numBlinds);
+      // Each blind reveals top-to-bottom, staggered by blind index
+      var localPos = (row * numBlinds) - blindIdx;
+      var norm = (blindIdx / numBlinds) * 0.6 + localPos * 0.4;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  pinwheel: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var cx = W / 2, cy = H / 2;
+    var numSlices = 6;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var dx = s.x - cx, dy = s.y - cy;
+      var angle = (Math.atan2(dy, dx) + Math.PI) / (2 * Math.PI); // 0–1
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var maxDist = Math.sqrt(W * W + H * H) / 2;
+      // Sweep: angular slices that fan out from center
+      var slice = (angle * numSlices) % 1;
+      var norm = slice * 0.5 + (dist / maxDist) * 0.5;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  diamond: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var cx = W / 2, cy = H / 2;
+    var maxDist = W / 2 + H / 2;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      // Manhattan distance gives diamond shape
+      var norm = (Math.abs(s.x - cx) + Math.abs(s.y - cy)) / maxDist;
+      var t = twoPhaseScale(norm, progress);
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  snake: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var cols = Math.floor(W / gap);
+    var rows = Math.floor(H / gap);
+    var offsetX = (W - (cols - 1) * gap) / 2;
+    var offsetY = (H - (rows - 1) * gap) / 2;
+    var total = cols * rows;
+    // Snake uses its own tight edge — only ~2 rows wide
+    var snakeEdge = 2 / rows;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var col = Math.round((s.x - offsetX) / gap);
+      var row = Math.round((s.y - offsetY) / gap);
+      col = Math.max(0, Math.min(cols - 1, col));
+      row = Math.max(0, Math.min(rows - 1, row));
+      var effectiveCol = (row % 2 === 0) ? col : (cols - 1 - col);
+      var seqIndex = row * cols + effectiveCol;
+      var norm = seqIndex / (total - 1);
+      // Custom two-phase with tight edge
+      var t;
+      if (progress <= 0.5) {
+        var front = progress * 2;
+        var d = front - norm;
+        t = d >= snakeEdge ? 1 : d <= 0 ? 0 : d / snakeEdge;
+      } else {
+        var trail = (progress - 0.5) * 2;
+        var d = trail - norm;
+        t = d >= snakeEdge ? 0 : d <= 0 ? 1 : 1 - d / snakeEdge;
+      }
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  heartbeat: function(vGrid, progress) {
+    var W = vGrid.width, H = vGrid.height;
+    var cx = W / 2, cy = H / 2;
+    var maxDist = Math.sqrt(W * W + H * H) / 2;
+    var numPulses = 3;
+    for (var i = 0; i < vGrid.shapes.length; i++) {
+      var s = vGrid.shapes[i];
+      var dist = Math.sqrt((s.x - cx) * (s.x - cx) + (s.y - cy) * (s.y - cy));
+      var norm = dist / maxDist;
+      // Multiple rapid pulses expanding outward
+      var wave = (progress * numPulses - norm);
+      var t = 0;
+      if (wave > 0) {
+        // Each pulse is a sharp bump
+        var pulsePhase = wave % 1;
+        t = pulsePhase < 0.3 ? pulsePhase / 0.3 : Math.max(0, 1 - (pulsePhase - 0.3) / 0.3);
+      }
+      s.scale = restScale + t * (s.maxScale - restScale);
+    }
+  },
+
+  scatter: function(vGrid, progress) {
+    var shapes = vGrid.shapes;
+    if (!vGrid._scatterSeeds) {
+      vGrid._scatterSeeds = [];
+      // Pick random seed points
+      var numSeeds = Math.max(5, Math.floor(shapes.length / 80));
+      for (var k = 0; k < numSeeds; k++) {
+        var si = Math.floor(((k * 7919 + 104729) & 0x7fffffff) % shapes.length);
+        vGrid._scatterSeeds.push({ x: shapes[si].x, y: shapes[si].y });
+      }
+      // For each shape, find distance to nearest seed
+      vGrid._scatterNorms = [];
+      var maxD = 0;
+      for (var i = 0; i < shapes.length; i++) {
+        var minD = Infinity;
+        for (var k = 0; k < vGrid._scatterSeeds.length; k++) {
+          var dx = shapes[i].x - vGrid._scatterSeeds[k].x;
+          var dy = shapes[i].y - vGrid._scatterSeeds[k].y;
+          var d = Math.sqrt(dx * dx + dy * dy);
+          if (d < minD) minD = d;
+        }
+        vGrid._scatterNorms.push(minD);
+        if (minD > maxD) maxD = minD;
+      }
+      // Normalize
+      for (var i = 0; i < shapes.length; i++) {
+        vGrid._scatterNorms[i] /= maxD;
+      }
+    }
+    for (var i = 0; i < shapes.length; i++) {
+      var t = twoPhaseScale(vGrid._scatterNorms[i], progress);
+      shapes[i].scale = restScale + t * (shapes[i].maxScale - restScale);
+    }
+  },
+};
+
+function buildStillSvg(vGrid) {
+  var W = vGrid.width;
+  var H = vGrid.height;
+  var maxCell = gap * 0.92;
+  var parts = ['<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + ' ' + H + '">'];
+  parts.push('<rect width="' + W + '" height="' + H + '" fill="' + bgColor + '"/>');
+
+  for (var i = 0; i < vGrid.shapes.length; i++) {
+    var shape = vGrid.shapes[i];
+    if (shape.scale < restScale * 0.15) continue;
+    if (shape.svgIndex < 0) continue;
+
+    var svgData = svgImages[shape.svgIndex];
+    var drawH = shape.size * 2 * shape.scale;
+    var drawW = drawH * svgData.aspect;
+    if (drawH > maxCell) { drawH = maxCell; drawW = drawH * svgData.aspect; }
+    if (drawW > maxCell) { drawW = maxCell; drawH = drawW / svgData.aspect; }
+    var tx = shape.x - drawW / 2;
+    var ty = shape.y - drawH / 2;
+
+    // Inline SVG content instead of <image> data URIs (Figma compatibility)
+    var raw = svgData.rawSvg;
+    var vbMatch = raw.match(/viewBox="([^"]+)"/);
+    if (vbMatch) {
+      var vb = vbMatch[1].split(/\s+/);
+      var vbW = parseFloat(vb[2]) - parseFloat(vb[0]);
+      var vbH = parseFloat(vb[3]) - parseFloat(vb[1]);
+      var scaleX = drawW / vbW;
+      var scaleY = drawH / vbH;
+      var inner = raw.replace(/<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '');
+      // Make IDs unique per instance to avoid clip-path collisions
+      inner = inner.replace(/id="([^"]+)"/g, 'id="$1_' + i + '"')
+                   .replace(/url\(#([^)]+)\)/g, 'url(#$1_' + i + ')');
+      parts.push('<g transform="translate(' + tx.toFixed(2) + ',' + ty.toFixed(2) + ') scale(' + scaleX.toFixed(6) + ',' + scaleY.toFixed(6) + ')">');
+      parts.push(inner);
+      parts.push('</g>');
+    }
+  }
+
+  parts.push('</svg>');
+  return parts.join('\n');
+}
+
+function exportStills() {
+  document.getElementById('status').textContent = 'Exporting stills...';
+  STILL_SIZES.forEach(function(size) {
+    var vGrid = buildVirtualGrid(size.w, size.h);
+    var progress = parseInt(document.getElementById('waveProgress').value) / 100;
+    applyAnimation(vGrid, progress);
+    var svg = buildStillSvg(vGrid);
+    var blob = new Blob([svg], { type: 'image/svg+xml' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'superteam-' + size.name + '.svg';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+  document.getElementById('status').textContent = '3 SVG stills exported!';
+  setTimeout(function() { document.getElementById('status').textContent = ''; }, 3000);
+}
+
+document.getElementById('btnStills').addEventListener('click', function(e) {
+  e.stopPropagation();
+  exportStills();
+});
+
+document.getElementById('waveProgress').addEventListener('input', function() {
+  document.getElementById('waveVal').textContent = this.value + '%';
+});
+
+document.getElementById('edgeSoftness').addEventListener('input', function() {
+  document.getElementById('edgeVal').textContent = (this.value / 100).toFixed(2);
+});
+
+document.getElementById('btnPreview').addEventListener('click', function(e) {
+  e.stopPropagation();
+  previewMode = !previewMode;
+  this.textContent = previewMode ? 'Exit Preview' : 'Preview';
+  if (previewMode) {
+    // Rebuild grid so preview starts fresh
+    init();
+  }
+});
+
+document.getElementById('animType').addEventListener('change', function(e) {
+  e.stopPropagation();
+  if (!previewMode) {
+    // Trigger the selected animation live
+    init();
+    waves = [];
+    triggerWave();
+  }
+});
+
+// ── BOOT ──
+loadSvgImages(function() {
+  init();
+  rafId = requestAnimationFrame(tick);
+  window.addEventListener('resize', init);
+  window.addEventListener('pointermove', onMove);
+  window.addEventListener('click', onClick);
+  triggerWave();
+});
+</script>
+</body>
+</html>

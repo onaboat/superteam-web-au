@@ -1,0 +1,68 @@
+import type { MemberCardModel } from "@/lib/members/types";
+
+/** Shown only when Supabase read env is not configured (local demo). */
+export const MOCK_MEMBER_CARDS: MemberCardModel[] = [
+  {
+    id: "mock-1",
+    name: "Metasal",
+    title: "Founder",
+    company: null,
+    skills: ["DevRel", "Product"],
+    photoUrl: "https://i.pravatar.cc/128?img=12",
+    twitterUrl: "https://x.com/metasal",
+  },
+  {
+    id: "mock-2",
+    name: "Jordan Lee",
+    title: "Core Contributor",
+    company: "Superteam",
+    skills: ["Engineering", "Community"],
+    photoUrl: "https://i.pravatar.cc/128?img=33",
+    twitterUrl: "https://x.com/jordanl",
+  },
+  {
+    id: "mock-3",
+    name: "Samira Okafor",
+    title: "Product Lead",
+    company: null,
+    skills: ["Product", "Design"],
+    photoUrl: "https://i.pravatar.cc/128?img=45",
+    twitterUrl: "https://x.com/samiraok",
+  },
+  {
+    id: "mock-4",
+    name: "Chris Patel",
+    title: "Developer Advocate",
+    company: null,
+    skills: ["DevRel", "Education"],
+    photoUrl: "https://i.pravatar.cc/128?img=52",
+    twitterUrl: "https://x.com/chrisp",
+  },
+  {
+    id: "mock-5",
+    name: "Alex Nguyen",
+    title: "Ecosystem",
+    company: null,
+    skills: ["Partnerships", "Growth"],
+    photoUrl: "https://i.pravatar.cc/128?img=68",
+    twitterUrl: "https://x.com/alexng",
+  },
+  {
+    id: "mock-6",
+    name: "Riley Kim",
+    title: "Operations",
+    company: null,
+    skills: ["Events", "Programs"],
+    photoUrl: "https://i.pravatar.cc/128?img=27",
+    twitterUrl: "https://x.com/rileyk",
+  },
+  {
+    id: "mock-7",
+    name: "Taylor Singh",
+    title: "Institutions",
+    company: null,
+    skills: ["Policy", "Research"],
+    photoUrl: "https://i.pravatar.cc/128?img=15",
+    twitterUrl: "https://x.com/taylors",
+  },
+];

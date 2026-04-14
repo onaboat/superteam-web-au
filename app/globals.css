@@ -6,6 +6,7 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-hero: var(--hero);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-geist-mono);
@@ -49,8 +50,11 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --background: #0a0a0a;
+  --hero: #ff6d2d;
+  --ticker-angle: -2deg;
+  --ticker-duration: 22s;
+  --foreground: oklch(0.985 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
@@ -84,7 +88,10 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  --background: #0a0a0a;
+  --hero: #ff6d2d;
+  --ticker-angle: -2deg;
+  --ticker-duration: 22s;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -123,8 +130,139 @@
   }
   body {
     @apply bg-background text-foreground;
+    min-height: 100dvh;
+    position: relative;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    border: 10px solid var(--chart-1);
+    pointer-events: none;
+    z-index: 9999;
   }
   html {
-    @apply font-sans;
+    @apply bg-background font-sans;
   }
+}
+
+@layer utilities {
+  .bg-hero {
+    background-color: var(--hero);
+  }
+
+  .ticker-tilt {
+    transform: rotate(var(--ticker-angle));
+    transform-origin: center;
+  }
+
+  .ticker-scroll {
+    animation: ticker-scroll var(--ticker-duration) linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ticker-scroll {
+      animation: none;
+    }
+  }
+
+  @keyframes ticker-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-33.333333%, 0, 0);
+    }
+  }
+}
+@layer components {
+  .builders-heading {
+    @apply flex flex-wrap items-center gap-3 text-4xl font-black leading-none text-chart-1 sm:text-5xl lg:gap-4;
+  }
+
+  .builders-member-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+
+  .builders-cta-row {
+    display: grid;
+    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    margin-top: 1.25rem;
+    scroll-margin-top: 6rem;
+  }
+}
+
+.member-card {
+  height: 100%;
+  max-width: 100%;
+  min-width: 220px;
+  min-height: 260px;
+  box-shadow: none;
+  transition: transform 200ms, box-shadow 200ms;
+  @apply border-2 border-chart-1 bg-primary shadow-none;
+}
+@media (min-width: 640px) {
+  .member-card {
+    min-height: 272px;
+  }
+}
+.member-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0 0 var(--chart-1);
+}
+.member-card-header {
+  @apply flex flex-col items-start gap-0 space-y-0 px-3 pt-3 pb-0 sm:px-4 sm:pt-4;
+}
+.member-card-title {
+  @apply mt-3 w-full break-words border-0 p-0 text-left text-sm font-bold leading-snug text-chart-1 sm:mt-4 sm:text-base;
+}
+.member-card-desc {
+  @apply mt-1 w-full break-words p-0 text-left text-xs font-normal leading-snug text-chart-1 sm:text-sm;
+}
+.member-card-company {
+  @apply mt-0.5 w-full break-words text-left text-[11px] font-medium leading-snug text-foreground/80 sm:text-xs;
+}
+.member-card-tags {
+  @apply mt-3 flex flex-wrap justify-start gap-1.5 sm:mt-4 sm:gap-2;
+}
+.member-card-tag {
+  @apply border border-chart-1 bg-chart-5 px-1.5 py-px text-[10px] font-medium leading-tight text-chart-1 sm:px-2 sm:py-0.5 sm:text-xs;
+}
+.member-card-content {
+  @apply flex flex-1 flex-col px-3 pb-0 sm:px-4;
+}
+.member-card-footer {
+  @apply mt-auto flex flex-col items-stretch border-0 bg-transparent px-3 pt-4 pb-3 sm:px-4 sm:pt-5 sm:pb-4;
+}
+.member-card-footer-text {
+  @apply text-left text-xs text-foreground sm:text-sm;
+}
+.member-card-footer-link {
+  @apply text-blue-400 underline-offset-2 hover:underline;
+}
+.builders-shell {
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16;
+}
+.builders-skeleton-cell {
+  @apply h-[260px] animate-pulse border-2 border-chart-1/30 bg-primary/20;
+}
+
+.text-headdingbig{
+  font-size: clamp(2.5rem, 6vw + 1.5rem, 6rem);
+  font-weight: bold;
+  line-height: 1;
+  color: var(--chart-1);
+  margin-bottom: -0.6rem;
+}
+
+.text-subheading {
+  font-size: clamp(1.75rem, 4vw + 0.875rem, 3.75rem);
+  font-weight: bold;
+  line-height: 1.1;
 }

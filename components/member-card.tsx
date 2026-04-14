@@ -1,7 +1,14 @@
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import type { MemberCardModel } from "@/lib/members/types";
 
 function twitterHandleLabel(url: string): string {
@@ -23,50 +30,46 @@ export function MemberCard({ member }: { member: MemberCardModel }) {
       : ["Member"];
 
   return (
-    <Card className="flex h-full min-h-[260px] w-full min-w-0 flex-col border-2 border-chart-1 bg-primary p-3 transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[4px_4px_0_0_var(--color-chart-1)] sm:min-h-[272px] sm:p-4">
-      <CardContent className="flex flex-1 flex-col gap-0 p-0">
-        <Avatar square size="lg" className="mx-auto size-12 sm:size-14">
+    <Card className="member-card">
+      <CardHeader className="member-card-header">
+        <Avatar square size="lg" className="size-12 shrink-0 sm:size-14">
           {member.photoUrl ? (
             <AvatarImage src={member.photoUrl} alt="" />
-          ) : (
-            <AvatarFallback className="rounded-none bg-chart-5 text-chart-1">
-              {member.name.slice(0, 1).toUpperCase()}
-            </AvatarFallback>
-          )}
+          ) : null}
+          <AvatarFallback className="rounded-none bg-chart-5 text-chart-1">
+            {member.name.slice(0, 1).toUpperCase()}
+          </AvatarFallback>
         </Avatar>
 
-        <h3 className="mt-3 w-full break-words text-left text-sm font-bold leading-snug text-chart-1 sm:mt-4 sm:text-base">
-          {member.name}
-        </h3>
+        <CardTitle className="member-card-title">{member.name}</CardTitle>
         {member.title ? (
-          <p className="mt-1 w-full break-words text-left text-xs font-normal leading-snug text-chart-1 sm:text-sm">
+          <CardDescription className="member-card-desc">
             {member.title}
-          </p>
+          </CardDescription>
         ) : null}
         {member.company ? (
-          <p className="mt-0.5 w-full break-words text-left text-[11px] font-medium leading-snug text-foreground/80 sm:text-xs">
-            {member.company}
-          </p>
+          <p className="member-card-company">{member.company}</p>
         ) : null}
+      </CardHeader>
 
-        <div className="mt-3 flex flex-wrap justify-start gap-1.5 sm:mt-4 sm:gap-2">
+      <CardContent className="member-card-content">
+        <div className="member-card-tags">
           {displayTags.map((tag) => (
-            <span
-              key={tag}
-              className="border border-chart-1 bg-chart-5 px-1.5 py-px text-[10px] font-medium leading-tight text-chart-1 sm:px-2 sm:py-0.5 sm:text-xs"
-            >
+            <span key={tag} className="member-card-tag">
               {tag}
             </span>
           ))}
         </div>
+      </CardContent>
 
-        <p className="mt-auto pt-4 text-left text-xs text-foreground sm:pt-5 sm:text-sm">
+      <CardFooter className="member-card-footer">
+        <p className="member-card-footer-text">
           {member.twitterUrl ? (
             <Link
               href={member.twitterUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-400 underline-offset-2 hover:underline"
+              className="member-card-footer-link"
             >
               {twitterHandleLabel(member.twitterUrl)}
             </Link>
@@ -74,7 +77,7 @@ export function MemberCard({ member }: { member: MemberCardModel }) {
             <span className="text-muted-foreground">—</span>
           )}
         </p>
-      </CardContent>
+      </CardFooter>
     </Card>
   );
 }

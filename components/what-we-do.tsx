@@ -26,11 +26,11 @@ export function WhatWeDo() {
     <section className="w-full bg-background py-14 sm:py-18">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
         <div className="max-w-5xl space-y-8 sm:space-y-10">
-          <h2 className="text-5xl leading-none font-black text-chart-1">
+          <h2 className="text-headdingbig">
             What We Do
           </h2>
 
-          <p className="text-5xl font-bold text-white ">
+          <p className="text-subheading ">
             We exist to accelerate builders, founders, creatives and
             institutions working towards internet capital markets on Solana.
           </p>

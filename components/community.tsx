@@ -360,7 +360,7 @@ function PostCard({ post }: { post: CommunityPost }) {
 export function Community() {
   return (
     <section className="w-full bg-background py-14 sm:py-18">
-      <div className="mx-auto w-full max-w-7xl px-5 sm:px-10 lg:px-16">
+      <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
         <h2 className="text-4xl font-black leading-none text-chart-1 sm:text-5xl">
           Community
         </h2>

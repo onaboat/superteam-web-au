@@ -98,29 +98,42 @@ export function Events() {
             Join us at upcoming events.
           </h2>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 justify-start text-left ">
             {STATS.map((stat) => {
               const Icon = stat.icon;
               return (
                 <div
                   key={stat.label}
-                  className="bg-background px-4 py-4 text-foreground sm:px-5 sm:py-5"
+                  className="bg-background px-4 py-4 text-foreground sm:px-5 sm:py-5 justify-start"
                 >
-                  <Icon
-                    className="mb-3 size-7 text-chart-1"
-                    weight="duotone"
-                    aria-hidden
-                  />
-                  <p className="text-3xl font-black tracking-tight text-chart-1 sm:text-4xl">
-                    {stat.value}
-                  </p>
-                  <p className="mt-1 text-xs leading-snug text-muted-foreground sm:text-sm">
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      className="size-7 text-chart-1"
+                      weight="duotone"
+                      aria-hidden
+                    />
+                    <p className="text-3xl font-black tracking-tight text-chart-1 sm:text-4xl">
+                      {stat.value}
+                    </p>
+                  </div>
+                  <p className="mt-2 text-xs leading-snug text-muted-foreground sm:text-sm">
                     {stat.label}
                   </p>
                 </div>
               );
             })}
           </div>
+          <PrimaryButton asChild>
+            <a
+              href={LUMA_CALENDAR_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2"
+            >
+              View all events on Luma
+              <ArrowSquareOut className="size-5" weight="bold" />
+            </a>
+          </PrimaryButton>
         </div>
 
         <div className="border-2 border-chart-1 bg-primary p-4 sm:p-5">
@@ -192,19 +205,7 @@ export function Events() {
           </ul>
         </div>
 
-        <div className="mt-8 flex justify-center lg:justify-start">
-          <PrimaryButton asChild>
-            <a
-              href={LUMA_CALENDAR_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2"
-            >
-              View all events on Luma
-              <ArrowSquareOut className="size-5" weight="bold" />
-            </a>
-          </PrimaryButton>
-        </div>
+     
       </div>
     </section>
   );

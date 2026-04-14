@@ -11,9 +11,9 @@ export function Partners() {
   return (
     <section
       id="partners"
-      className="w-full scroll-mt-24 bg-background py-14 sm:py-18"
+      className="w-full bg-background py-14 sm:py-18"
     >
-      <div className="mx-auto w-full max-w-7xl px-5 sm:px-10 lg:px-16">
+      <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
         <h2 className="text-4xl font-black leading-none text-chart-1 sm:text-5xl">
           Ecosystem & Partners
         </h2>
@@ -30,8 +30,8 @@ export function Partners() {
               <Image
                 src={partner.logo}
                 alt={partner.name}
-                width={160}
-                height={80}
+                width={80}
+                height={40}
                 className="h-12 w-auto object-contain grayscale transition-all group-hover:scale-105 group-hover:grayscale-0 sm:h-16"
               />
             </Link>

@@ -11,14 +11,11 @@ import { rowToCardModel } from "@/lib/members/types";
 export function BuildersSectionSkeleton() {
   return (
     <section className="w-full bg-background py-14 sm:py-18">
-      <div className="mx-auto w-full max-w-7xl px-5 sm:px-10 lg:px-16">
+      <div className="builders-shell">
         <div className="h-12 max-w-md animate-pulse bg-chart-1/20" />
-        <div className="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+        <div className="builders-member-grid mt-10">
           {Array.from({ length: 7 }).map((_, i) => (
-            <div
-              key={i}
-              className="h-[260px] animate-pulse border-2 border-chart-1/30 bg-primary/20"
-            />
+            <div key={i} className="builders-skeleton-cell" />
           ))}
         </div>
       </div>
@@ -41,8 +38,8 @@ export async function Builders() {
       id="members"
       className="w-full scroll-mt-24 bg-background py-14 sm:py-18"
     >
-      <div className="mx-auto w-full max-w-7xl px-5 sm:px-10 lg:px-16">
-        <h2 className="flex flex-wrap items-center gap-3 text-4xl font-black leading-none text-chart-1 sm:text-5xl lg:gap-4">
+      <div className="builders-shell">
+        <h2 className="builders-heading">
           <span>Australian</span>
           <Image
             src="/build%20Images/SolanaLogoY.svg"
@@ -55,7 +52,7 @@ export async function Builders() {
         </h2>
 
         {readConfigured && rows.length === 0 ? (
-          <div className="mt-10 border-2 border-dashed border-chart-1/60 bg-primary/25 px-5 py-10 text-center sm:px-8">
+          <div className="mt-10 border-2 border-dashed border-chart-1/60 bg-primary/25 px-5 py-10 text-left sm:px-8">
             <p className="text-base font-bold text-chart-1 sm:text-lg">
               Member spotlights go live here after profiles are published.
             </p>
@@ -72,18 +69,15 @@ export async function Builders() {
             </p>
           </div>
         ) : (
-          <div className="mt-10 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 lg:gap-2">
+          <div className="builders-member-grid mt-10">
             {members.map((m) => (
               <MemberCard key={m.id} member={m} />
             ))}
           </div>
         )}
 
-        <div
-          id="get-involved"
-          className="mt-5 grid scroll-mt-24 grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:mt-4 lg:grid-cols-7 lg:gap-2"
-        >
-          <PrimaryButton asChild className="w-full border-2 border-chart-1 sm:w-auto lg:w-full">
+        <div id="get-involved" className="builders-cta-row">
+          <PrimaryButton asChild className="w-full border-2 border-chart-1 sm:w-auto">
             <Link href="/get-involved">Join now</Link>
           </PrimaryButton>
         </div>

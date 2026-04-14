@@ -91,7 +91,7 @@ function LocationRow({
 
 export function Events() {
   return (
-    <section className="w-full  py-14 text-card-foreground sm:py-18">
+    <section id="events" className="w-full scroll-mt-24 text-card-foreground">
       <div className="mx-auto grid w-full max-w-6xl gap-10 px-5 sm:px-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] lg:items-start lg:gap-12 lg:px-16">
         <div className="space-y-8">
           <h2 className="text-4xl font-black leading-tight text-chart-1 sm:text-5xl">

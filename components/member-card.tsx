@@ -32,9 +32,9 @@ export function MemberCard({ member }: { member: MemberCardModel }) {
   return (
     <Card className="member-card">
       <CardHeader className="member-card-header">
-        <Avatar square size="lg" className="size-12 shrink-0 sm:size-14">
+        <Avatar square size="lg" className="size-20 shrink-0 sm:size-24">
           {member.photoUrl ? (
-            <AvatarImage src={member.photoUrl} alt="" />
+            <AvatarImage src={member.photoUrl} alt=""  />
           ) : null}
           <AvatarFallback className="rounded-none bg-chart-5 text-chart-1">
             {member.name.slice(0, 1).toUpperCase()}
@@ -63,13 +63,13 @@ export function MemberCard({ member }: { member: MemberCardModel }) {
       </CardContent>
 
       <CardFooter className="member-card-footer">
-        <p className="member-card-footer-text">
+        <p className="member-card-footer-text text-black">
           {member.twitterUrl ? (
             <Link
               href={member.twitterUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="member-card-footer-link"
+              className="member-card-footer-link  underline-offset-2 hover:underline"
             >
               {twitterHandleLabel(member.twitterUrl)}
             </Link>

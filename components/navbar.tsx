@@ -1,19 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { LUMA_CALENDAR_URL } from "@/lib/luma";
 import { PrimaryButton } from "@/components/ui/primary-button";
 
 const navItems = [
   { label: "About", href: "/#about" },
-  { label: "Events", href: LUMA_CALENDAR_URL },
+  { label: "Events", href: "/#events" },
   { label: "Members", href: "/members" },
   { label: "FAQ", href: "/#faq" },
 ] as const;
 
 export function Navbar() {
   return (
-    <header className="absolute inset-x-0 top-0 z-50 w-full bg-transparent">
+    <header className="fixed inset-x-0 top-0 z-50 w-full bg-transparent">
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 px-3 py-4 sm:px-4 sm:py-5">
         <Link
           href="/"
@@ -21,12 +20,12 @@ export function Navbar() {
           aria-label="Superteam Australia home"
         >
           <Image
-            src="/Superteam-Aus.svg"
+            src="/SuperTeamAusFlag.png"
             alt="Superteam Australia"
             width={160}
             height={33}
             priority
-            className="h-auto w-[120px] sm:w-[145px]"
+            className="h-auto"
           />
         </Link>
 

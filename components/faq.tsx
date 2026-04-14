@@ -44,10 +44,10 @@ export function Faq() {
   return (
     <section id="faq" className="w-full scroll-mt-24 bg-background py-14 sm:py-18">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
-        <h2 className="text-4xl font-black leading-tight text-chart-1 sm:text-5xl">
+        <h2 className="text-headdingbig">
           Frequently Asked Questions
         </h2>
-        <p className="mt-4 max-w-3xl text-lg font-bold text-foreground sm:text-xl">
+        <p className="text-subheading">
           Everything you need to know about Superteam Australia.
         </p>
 

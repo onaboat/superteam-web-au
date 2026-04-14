@@ -8,7 +8,7 @@ const defaultCopy = {
   headlineLine2Prefix: "for",
   headlineLine3: "Builders",
   tagline:
-    "Accelerating founders, creatives & institutions driving internet capital markets on Solana",
+    "Connecting founders, developers & institutions with capital and community",
 } as const;
 
 type HeroProps = {
@@ -39,7 +39,7 @@ export function Hero({ block }: HeroProps) {
                 src="/Solana-logo.svg"
                 width={360}
                 height={53}
-                className="mb-1 inline-block h-auto w-[170px] align-baseline sm:mb-2 sm:w-[230px] lg:w-[320px]"
+                className="mb-1 inline-block h-auto w-[170px] align-middle sm:mb-2 sm:w-[230px] lg:w-[320px]"
                 priority
               />
             </span>

@@ -254,7 +254,7 @@
   @apply h-[260px] animate-pulse border-2 border-chart-1/30 bg-primary/20;
 }
 
-.text-headdingbig{
+.text-headingbig{
   font-size: clamp(2.5rem, 6vw + 1.5rem, 6rem);
   font-weight: bold;
   line-height: 1;

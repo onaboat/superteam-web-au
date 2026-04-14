@@ -92,7 +92,7 @@ export function Footer() {
 
         <p className="mt-14 max-w-5xl text-2xl font-bold leading-tight sm:mt-16 sm:text-3xl lg:text-4xl">
           Accelerating founders, creatives & institutions driving internet
-          capital markets on solana
+          capital markets on Solana
         </p>
       </div>
     </footer>

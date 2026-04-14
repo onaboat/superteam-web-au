@@ -18,9 +18,6 @@
 
 
 
-
----
-
 ## Overview
 
 A production-oriented marketing site for **Superteam Australia** — the Solana builder community in Australia — with editorial control through a headless CMS and real member data on **Supabase**.

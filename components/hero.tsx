@@ -8,7 +8,7 @@ const defaultCopy = {
   headlineLine2Prefix: "for",
   headlineLine3: "Builders",
   tagline:
-    "Accelerating founders, creatives & institutions driving internet capital markets on solana",
+    "Accelerating founders, creatives & institutions driving internet capital markets on Solana",
 } as const;
 
 type HeroProps = {

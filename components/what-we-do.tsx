@@ -1,11 +1,11 @@
 const items = [
   {
     title: "Builder & Founder Support",
-    body: "Product and technical guidance to help teams ship. Support across hackathons, bounties and ecosystem program",
+    body: "Product and technical guidance to help teams ship. Support across hackathons, bounties and ecosystem programs.",
   },
   {
     title: "Capital & Fundraising",
-    body: "Connecting capital with investable, scalable projects. Supporting founders with positioning and investor",
+    body: "Connecting capital with investable, scalable projects. Supporting founders with positioning and investor readiness.",
   },
   {
     title: "Growth & Distribution",
@@ -26,7 +26,7 @@ export function WhatWeDo() {
     <section className="w-full bg-background py-14 sm:py-18">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
         <div className="max-w-5xl space-y-8 sm:space-y-10">
-          <h2 className="text-headdingbig">
+          <h2 className="text-headingbig">
             What We Do
           </h2>
 

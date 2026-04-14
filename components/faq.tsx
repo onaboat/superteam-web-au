@@ -22,13 +22,13 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     id: "2",
-    question: "How can i get involved",
+    question: "How can I get involved?",
     answer:
       "Join events and build sessions, contribute to open bounties, or introduce your project in Discord. Whether you code, design, or organise, there is a path to participate — start by following announcements and showing up to a meetup.",
   },
   {
     id: "3",
-    question: "What opportunities are avaliable ?",
+    question: "What opportunities are available?",
     answer:
       "Members can access hackathons, grants, educational workshops, and partner introductions. Opportunities rotate with each programme — check the events feed and community channels for what is open right now.",
   },
@@ -44,7 +44,7 @@ export function Faq() {
   return (
     <section id="faq" className="w-full scroll-mt-24 bg-background py-14 sm:py-18">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
-        <h2 className="text-headdingbig">
+        <h2 className="text-headingbig">
           Frequently Asked Questions
         </h2>
         <p className="text-subheading">

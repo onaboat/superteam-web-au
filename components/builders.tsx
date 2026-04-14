@@ -39,7 +39,7 @@ export async function Builders() {
       className="w-full scroll-mt-24 bg-background py-14 sm:py-18"
     >
       <div className="builders-shell">
-        <h2 className="text-headdingbig inline-flex items-baseline gap-2 whitespace-nowrap">
+        <h2 className="text-headingbig inline-flex items-baseline gap-2 whitespace-nowrap">
           <Image
             src="/build%20Images/SolanaLogoY.svg"
             alt="Solana"

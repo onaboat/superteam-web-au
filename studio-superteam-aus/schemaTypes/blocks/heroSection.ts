@@ -29,7 +29,7 @@ export const heroSection = defineType({
       type: 'text',
       rows: 3,
       initialValue:
-        'Accelerating founders, creatives & institutions driving internet capital markets on solana',
+        'Accelerating founders, creatives & institutions driving internet capital markets on Solana',
     }),
   ],
   preview: {

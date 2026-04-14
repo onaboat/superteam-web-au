@@ -71,7 +71,7 @@ const MOCK_POSTS: CommunityPost[] = [
     user: {
       name: "Superteam Australia",
       handle: "@SuperteamAU",
-      avatarSrc: "https://i.pravatar.cc/96?img=12",
+      avatarSrc: "/builders_images/SAU.jpg",
       verified: true,
     },
     body: (
@@ -81,11 +81,8 @@ const MOCK_POSTS: CommunityPost[] = [
         teams with mentors all Saturday.
       </>
     ),
-    quoted: {
-      author: "Colosseum",
-      handle: "@colosseum",
-      text: "Introducing Colosseum Copilot — your build partner for the frontier hackathon.",
-    },
+    imageSrc: "/twiter_mock/Link1.png",
+    imageAlt: "Product preview",
     timestamp: "10:44 AM · Apr 4, 2026",
     likes: 48,
     replies: 4,
@@ -96,7 +93,7 @@ const MOCK_POSTS: CommunityPost[] = [
     user: {
       name: "Colosseum",
       handle: "@colosseum",
-      avatarSrc: "https://i.pravatar.cc/96?img=60",
+      avatarSrc: "/builders_images/SAU.jpg",
       verified: true,
     },
     body: (
@@ -106,7 +103,7 @@ const MOCK_POSTS: CommunityPost[] = [
         <TweetLink href="https://colosseum.org">colosseum.org</TweetLink>
       </>
     ),
-    imageSrc: "/build%20Images/Events.jpg",
+    imageSrc: "/twiter_mock/Link1.png",
     imageAlt: "Product preview",
     timestamp: "9:12 AM · Apr 3, 2026",
     likes: 112,
@@ -118,7 +115,7 @@ const MOCK_POSTS: CommunityPost[] = [
     user: {
       name: "Superteam Australia",
       handle: "@SuperteamAU",
-      avatarSrc: "https://i.pravatar.cc/96?img=12",
+      avatarSrc: "/builders_images/SAU.jpg",
       verified: true,
     },
     body: (
@@ -138,7 +135,7 @@ const MOCK_POSTS: CommunityPost[] = [
     user: {
       name: "Superteam Australia",
       handle: "@SuperteamAU",
-      avatarSrc: "https://i.pravatar.cc/96?img=12",
+      avatarSrc: "/builders_images/SAU.jpg",
       verified: true,
     },
     body: (
@@ -147,7 +144,7 @@ const MOCK_POSTS: CommunityPost[] = [
         Design &amp; Build Challenge — tap in.
       </>
     ),
-    imageSrc: "/build%20Images/What%20we%20do.png",
+    imageSrc: "/twiter_mock/Link2.png",
     imageAlt: "Challenge listings preview",
     timestamp: "11:20 AM · Apr 1, 2026",
     likes: 67,
@@ -159,7 +156,7 @@ const MOCK_POSTS: CommunityPost[] = [
     user: {
       name: "Superteam Australia",
       handle: "@SuperteamAU",
-      avatarSrc: "https://i.pravatar.cc/96?img=12",
+      avatarSrc: "/builders_images/SAU.jpg",
       verified: true,
     },
     body: (
@@ -178,7 +175,7 @@ const MOCK_POSTS: CommunityPost[] = [
     user: {
       name: "Superteam Australia",
       handle: "@SuperteamAU",
-      avatarSrc: "https://i.pravatar.cc/96?img=12",
+      avatarSrc: "/builders_images/SAU.jpg",
       verified: true,
     },
     body: (
@@ -188,11 +185,8 @@ const MOCK_POSTS: CommunityPost[] = [
         sprints.
       </>
     ),
-    quoted: {
-      author: "K | Superteam",
-      handle: "@k_superteam",
-      text: "It’s a startup competition with a shipping deadline, not a novelty sprint.",
-    },
+   imageSrc: "/twiter_mock/Link3.png",
+   imageAlt: "Product preview",
     timestamp: "2:33 PM · Mar 29, 2026",
     likes: 54,
     replies: 7,
@@ -211,11 +205,9 @@ const MOCK_POSTS: CommunityPost[] = [
         teams are building toward launch, not a slide deck.
       </>
     ),
-    quoted: {
-      author: "ben",
-      handle: "@benbottle",
-      text: "Judging rewards traction and clarity over vibes.",
-    },
+
+    imageSrc: "/twiter_mock/Link4.png",
+    imageAlt: "Product preview",
     timestamp: "6:50 AM · Mar 28, 2026",
     likes: 201,
     replies: 22,
@@ -226,7 +218,7 @@ const MOCK_POSTS: CommunityPost[] = [
     user: {
       name: "Superteam Australia",
       handle: "@SuperteamAU",
-      avatarSrc: "https://i.pravatar.cc/96?img=12",
+      avatarSrc: "/builders_images/SAU.jpg",
       verified: true,
     },
     body: (
@@ -359,11 +351,11 @@ function PostCard({ post }: { post: CommunityPost }) {
 
 export function Community() {
   return (
-    <section className="w-full bg-background py-14 sm:py-18">
+    <section className="w-full bg-background ">
       <div className="mx-auto w-full max-w-6xl px-5 sm:px-10 lg:px-16">
-        <h2 className="text-4xl font-black leading-none text-chart-1 sm:text-5xl">
+        {/* <h2 className="text-4xl font-black leading-none text-chart-1 sm:text-5xl">
           Community
-        </h2>
+        </h2> */}
 
         <div className="mt-10 columns-1 gap-6 md:columns-2 lg:columns-3 lg:gap-8">
           {MOCK_POSTS.map((post) => (

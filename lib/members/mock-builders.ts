@@ -8,7 +8,7 @@ export const MOCK_MEMBER_CARDS: MemberCardModel[] = [
     title: "Founder",
     company: null,
     skills: ["DevRel", "Product"],
-    photoUrl: "https://i.pravatar.cc/128?img=12",
+    photoUrl: "/builders_images/1.jpg",
     twitterUrl: "https://x.com/metasal",
   },
   {
@@ -17,7 +17,7 @@ export const MOCK_MEMBER_CARDS: MemberCardModel[] = [
     title: "Core Contributor",
     company: "Superteam",
     skills: ["Engineering", "Community"],
-    photoUrl: "https://i.pravatar.cc/128?img=33",
+    photoUrl: "/builders_images/2.jpg",
     twitterUrl: "https://x.com/jordanl",
   },
   {
@@ -26,7 +26,7 @@ export const MOCK_MEMBER_CARDS: MemberCardModel[] = [
     title: "Product Lead",
     company: null,
     skills: ["Product", "Design"],
-    photoUrl: "https://i.pravatar.cc/128?img=45",
+    photoUrl: "/builders_images/3.jpg",
     twitterUrl: "https://x.com/samiraok",
   },
   {
@@ -35,7 +35,7 @@ export const MOCK_MEMBER_CARDS: MemberCardModel[] = [
     title: "Developer Advocate",
     company: null,
     skills: ["DevRel", "Education"],
-    photoUrl: "https://i.pravatar.cc/128?img=52",
+    photoUrl: "/builders_images/4.jpg",
     twitterUrl: "https://x.com/chrisp",
   },
   {
@@ -44,7 +44,7 @@ export const MOCK_MEMBER_CARDS: MemberCardModel[] = [
     title: "Ecosystem",
     company: null,
     skills: ["Partnerships", "Growth"],
-    photoUrl: "https://i.pravatar.cc/128?img=68",
+    photoUrl: "/builders_images/5.jpg",
     twitterUrl: "https://x.com/alexng",
   },
   {
@@ -53,7 +53,7 @@ export const MOCK_MEMBER_CARDS: MemberCardModel[] = [
     title: "Operations",
     company: null,
     skills: ["Events", "Programs"],
-    photoUrl: "https://i.pravatar.cc/128?img=27",
+    photoUrl: "/builders_images/6.jpg",
     twitterUrl: "https://x.com/rileyk",
   },
   {
@@ -62,7 +62,7 @@ export const MOCK_MEMBER_CARDS: MemberCardModel[] = [
     title: "Institutions",
     company: null,
     skills: ["Policy", "Research"],
-    photoUrl: "https://i.pravatar.cc/128?img=15",
+    photoUrl: "/builders_images/7.jpg",
     twitterUrl: "https://x.com/taylors",
   },
 ];

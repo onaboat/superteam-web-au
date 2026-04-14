@@ -10,7 +10,7 @@ import { rowToCardModel } from "@/lib/members/types";
 
 export function BuildersSectionSkeleton() {
   return (
-    <section className="w-full bg-background py-14 sm:py-18">
+    <section className="w-full bg-background ">
       <div className="builders-shell">
         <div className="h-12 max-w-md animate-pulse bg-chart-1/20" />
         <div className="builders-member-grid mt-10">
@@ -39,16 +39,15 @@ export async function Builders() {
       className="w-full scroll-mt-24 bg-background py-14 sm:py-18"
     >
       <div className="builders-shell">
-        <h2 className="builders-heading">
-          <span>Australian</span>
+        <h2 className="text-headdingbig inline-flex items-baseline gap-2 whitespace-nowrap">
           <Image
             src="/build%20Images/SolanaLogoY.svg"
             alt="Solana"
-            width={71}
-            height={63}
-            className="h-7 w-auto sm:h-9 lg:h-10"
+            width={60}
+            height={60}
+            className="h-[0.70em] w-auto shrink-0 self-baseline"
           />
-          <span>Builders</span>
+          <span>&nbsp;Builders Australia</span>
         </h2>
 
         {readConfigured && rows.length === 0 ? (
@@ -77,7 +76,7 @@ export async function Builders() {
         )}
 
         <div id="get-involved" className="builders-cta-row">
-          <PrimaryButton asChild className="w-full border-2 border-chart-1 sm:w-auto">
+          <PrimaryButton asChild className="w-full sm:w-auto">
             <Link href="/get-involved">Join now</Link>
           </PrimaryButton>
         </div>

@@ -20,7 +20,7 @@ export function Navbar() {
           aria-label="Superteam Australia home"
         >
           <Image
-            src="/SuperteamAusFlag.png"
+            src="/SuperTeamAusFlag.png"
             alt="Superteam Australia"
             width={160}
             height={33}
